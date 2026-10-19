@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png"><meta name="apple-mobile-web-app-title" content="رفاهة وكشتة"><meta name="theme-color" content="#243447"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>رفاهة وكشتة</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;800&display=swap" rel="stylesheet">
+<style>
+:root{--p:#243447;--pd:#17222f;--o:#e53935;--g:#1e7be0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--p);color:#fff;font-family:"Baloo Bhaijaan 2",Tahoma,Arial,sans-serif;overflow-x:hidden}
+button{font:inherit;cursor:pointer}
+#setup{position:relative;min-height:100dvh;padding:16px 18px 40px;overflow:hidden}
+.deco{position:absolute;width:150px;height:173px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:90px;color:var(--p);font-weight:800}
+.form{position:relative;max-width:560px;margin:0 auto}
+.logo{text-align:center;transform:rotate(-5deg);font-weight:800;line-height:.95;margin:10px 0 26px;text-shadow:4px 4px 0 #0c141d}
+.logo b{display:block;font-size:56px;color:#ffe600}.logo i{display:block;font-style:normal;font-size:40px;color:#2fd1e8}.logo u{display:block;text-decoration:none;font-size:58px;color:#ff2d46}
+label{display:block;font-size:18px;margin:14px 6px 6px}
+input{width:100%;padding:12px 18px;border-radius:40px;border:3px solid rgba(255,255,255,.35);background:rgba(255,255,255,.2);color:#fff;font:inherit;font-size:18px;text-align:center}
+input::placeholder{color:rgba(255,255,255,.55)}
+.r2{display:flex;gap:12px}.r2>div{flex:1}
+.chip{border:0;border-radius:40px;padding:10px 16px;font-size:17px;background:var(--pd);color:#9fb3c8;margin:0 3px 6px}
+.chip.on{background:#fff;color:var(--p);box-shadow:0 5px 0 #a9b8c9}
+#go{width:100%;margin-top:22px;padding:14px;border:0;border-radius:40px;font-size:26px;background:#fff;color:var(--p);box-shadow:0 6px 0 #a9b8c9}
+#go:disabled{background:rgba(255,255,255,.3);color:rgba(255,255,255,.5);box-shadow:0 6px 0 rgba(0,0,0,.2);cursor:default}
+#game{display:none;height:100dvh;flex-direction:row;direction:ltr}
+#ba{position:relative;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:0}
+#ba svg{position:absolute;inset:0;width:100%;height:100%}
+.brd{position:relative;transform:translateX(calc(var(--w)*-.25))}
+.rw{display:flex;margin-top:calc(var(--w)*-.2887)}.rw:first-child{margin-top:0}
+.rw:nth-child(even){transform:translateX(calc(var(--w)*.5))}
+.hx{width:var(--w);height:calc(var(--w)*1.1547);background:var(--p);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);border:0;padding:0;display:flex;align-items:center;justify-content:center;flex:none}
+.hx i{width:calc(100% - 10px);height:calc(100% - 10px);clip-path:inherit;background:#fff;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:calc(var(--w)*.45);font-weight:800;color:var(--p)}
+.hx.o i{background:var(--o);color:#fff}.hx.g i{background:var(--g);color:#fff}.hx.sel i{background:#ffe14d}
+#pz{position:absolute;inset:0;background:rgba(12,20,30,.88);display:none;align-items:center;justify-content:center;font-size:34px;z-index:3}
+#pan{width:330px;background:var(--p);padding:14px;display:flex;flex-direction:column;gap:9px;direction:rtl;overflow:auto}
+@media (max-aspect-ratio:1/1){#game{flex-direction:column}#ba{flex:none;height:56dvh}#pan{width:100%;flex:1}}
+.top{display:flex;justify-content:space-between;align-items:center}
+.pill{border:0;border-radius:30px;padding:8px 20px;background:#fff;color:var(--p);font-size:17px;box-shadow:0 4px 0 #a9b8c9}
+.ic{width:42px;height:42px;border-radius:50%;border:3px solid rgba(255,255,255,.4);background:rgba(255,255,255,.2);color:#fff;font-size:18px}
+#rt{text-align:center;font-size:34px;font-weight:800;color:#ff2d46;text-shadow:3px 3px 0 #0c141d;margin:4px 0}
+#gn2{text-align:center;font-size:14px;opacity:.75}
+.bt{border:0;border-radius:16px;padding:11px;font-size:20px;background:#fff;color:var(--p);box-shadow:0 5px 0 #a9b8c9;width:100%}
+.bt:disabled{background:rgba(255,255,255,.25);color:rgba(255,255,255,.55);box-shadow:0 5px 0 rgba(0,0,0,.18)}
+#qc{display:none;background:rgba(255,255,255,.15);border-radius:16px;padding:10px;text-align:center}
+#ql{font-size:34px;font-weight:800;color:#ffe600;line-height:1}#lv{font-size:13px;opacity:.8}#qt{font-size:19px;margin:4px 0}#an{font-size:24px;font-weight:800;color:#2fd1e8;min-height:30px}
+.sm{border:0;border-radius:12px;padding:7px 14px;background:#fff;color:var(--p);font-size:16px}
+#asg{display:none;flex-direction:column;gap:7px}
+#asg button{border:0;border-radius:14px;padding:10px;font-size:19px;color:#fff}
+#msg{text-align:center;font-size:22px;font-weight:800;color:#ffe600;min-height:6px}
+.sr{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:auto;padding-top:6px}
+.sh{width:76px;height:88px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800}
+.tn{text-align:center;font-size:13px;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#menu{display:none;gap:7px;flex-direction:column}
+#rot{display:none;position:fixed;top:0;left:0;right:0;z-index:20;background:#ffe600;color:#222;text-align:center;font-size:14px;padding:4px;pointer-events:none}
+@media (orientation:portrait){#rot{display:block}}
+@media (orientation:landscape) and (max-height:520px){
+#pan{width:300px;padding:8px;gap:5px}#rt{font-size:24px;margin:0}#gn2{display:none}
+.bt{padding:7px;font-size:16px}.pill{padding:5px 14px;font-size:14px}.ic{width:34px;height:34px}
+#qc{padding:6px}#ql{font-size:26px}#qt{font-size:15px;margin:2px 0}#an{font-size:19px;min-height:22px}#asg button{padding:7px;font-size:16px}
+.sh{width:56px;height:65px;font-size:24px}.sr{gap:10px;padding-top:2px}#msg{font-size:17px}
+#setup{padding:8px 16px}.logo{margin:0 0 4px;transform:rotate(-3deg);display:flex;gap:10px;justify-content:center;align-items:baseline}
+.logo b,.logo i,.logo u{display:inline;font-size:30px}
+label{margin:6px 6px 3px;font-size:15px}input{padding:7px 14px;font-size:16px}#go{margin-top:10px;padding:8px;font-size:20px}.chip{padding:6px 12px;font-size:15px}}
+#home{display:flex;position:relative;min-height:100dvh;flex-direction:column;align-items:center;justify-content:center;padding:16px;background:#243447;overflow:hidden}
+#home .deco{color:#243447}
+.hc{position:relative;width:min(92%,380px);display:flex;flex-direction:column;gap:10px;text-align:center;font-size:18px}
+.hb{border:0;border-radius:14px;padding:12px;font-size:20px;font-weight:800;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.hb:disabled{opacity:.45}
+.hn{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));z-index:2;border-radius:12px;padding:8px 18px;font-size:16px;border:2px solid rgba(255,255,255,.6);background:rgba(0,0,0,.2);color:#fff}
+#md{position:fixed;inset:0;background:rgba(12,20,30,.8);display:none;align-items:center;justify-content:center;z-index:30;padding:20px}
+#md input{color:#243447;background:#eef1f5;border:2px solid #c9d2dc;padding:10px 14px;font-size:17px}
+#md>div{background:#fff;color:#243447;border-radius:18px;padding:18px;max-width:340px;text-align:center;font-size:18px;display:flex;flex-direction:column;gap:10px}
+/* mobile */
+:root{padding-top:0;padding-bottom:0}
+html{-webkit-text-size-adjust:100%;overscroll-behavior:none}
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+input{-webkit-user-select:text;user-select:text;font-size:16px;min-height:44px}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;min-height:44px}
+button:active:not(:disabled){transform:translateY(2px);filter:brightness(.92)}
+.hx{min-height:0}.hx:active i{filter:brightness(.85)}
+.ic{width:44px;height:44px}.deco{pointer-events:none}
+.bt:disabled{color:rgba(255,255,255,.8)}
+#qt,#msg,#an{overflow-wrap:anywhere}
+#game{padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+#pan{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;gap:8px;min-height:0}
+#setup{padding-top:max(16px,env(safe-area-inset-top,0px));padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
+#home{justify-content:flex-start;padding:calc(64px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.hc{margin:auto}.hb{min-height:48px}
+#md{align-items:flex-start;overflow-y:auto}#md>div{margin:auto;width:100%}
+@media (max-aspect-ratio:1/1){#ba{flex:none;height:auto;width:100%;aspect-ratio:5.5/4.8;max-height:52dvh}}
+@media (orientation:portrait),(min-height:521px){.logo b{font-size:clamp(40px,13vw,60px)}.logo i{font-size:clamp(28px,9vw,42px)}.logo u{font-size:clamp(42px,14vw,64px)}}
+@media (orientation:landscape) and (max-height:520px){button{min-height:40px}.hb{padding:6px;font-size:17px;min-height:40px}.hc{width:min(94%,640px);display:grid;grid-template-columns:1fr 1fr;gap:8px}.hc>div{grid-column:1/-1}#home{padding-top:calc(52px + env(safe-area-inset-top,0px))}}
+#rot{display:none!important;top:env(safe-area-inset-top,0px)}#rot.show{display:block!important}
+/* iPhone: allow normal scrolling, retain native click activation. */
+html{overscroll-behavior:auto}
+body{overscroll-behavior:auto}
+#home,#setup{min-height:100vh;min-height:100dvh}
+#game{height:100vh;height:100dvh}
+#ba{min-width:0}#ba svg{pointer-events:none}
+.r2>div{min-width:0}.top{gap:12px;flex-wrap:wrap}
+button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offset:3px}
+#setup{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+#md{padding: max(20px,env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px))}
+#pan{padding-bottom:20px}
+#home .hn{max-width:45%}
+@media(max-width:600px) and (orientation:portrait){
+ #game{height:auto;min-height:100vh;min-height:100dvh;flex-direction:column}
+ #ba{flex:none;height:48vh;height:48dvh;max-height:none;aspect-ratio:auto}
+ #pan{flex:none;width:100%;overflow:visible}
+ .r2{flex-wrap:wrap}.r2>div{flex:1 1 140px}
+}
+@media(orientation:landscape) and (max-height:520px){
+ #pan{width:clamp(220px,40vw,300px)}
+ button,.ic{min-height:44px}.ic{width:44px;height:44px;flex-shrink:0}
+}
+</style>
+</head>
+<body><noscript><div style="position:fixed;inset:0;z-index:999;background:#243447;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font:22px/1.8 Tahoma,Arial,sans-serif">هذه المعاينة لا تشغّل الجافاسكربت، فالأزرار لن تعمل.<br>افتح اللعبة من متصفح Safari أو Chrome عبر رابط الموقع.</div></noscript><div id="rot">🔄 قلّب الجوال أفقيًا للحصول على أفضل عرض</div>
+<div id="home"><button class="hn" id="hinfo" style="left:14px">المعلومات</button><button class="hn" id="hhelp" style="right:14px;background:#ffe600;color:#333;border:0">مساعدة</button>
+<div class="hc"><div class="logo"><b>رفاهة</b><i>و</i><u>كشتة</u></div>
+<div id="hnote"></div><button class="sm" id="installHelp">إضافة للشاشة الرئيسية</button>
+<button class="hb" id="hplay" style="background:#25d366;color:#07391b">ابدأ اللعبة</button>
+<button class="hb" id="hbuy" style="background:#26c6da;color:#07383f">شراء تفعيل مدى الحياة (14.99 ر.س.)</button>
+<button class="hb" id="hrest" style="background:#fff;color:#555">استعادة المشتريات</button>
+<button class="hb" id="hfree" style="background:#64425f;color:#ffe600;border:2px solid #ffe600"></button>
+<div style="margin-top:6px">لديك حساب مسبقًا؟</div>
+<button class="hb" id="hlog" style="background:#25d366;color:#07391b">دخول</button>
+<button class="hb" id="hreg" style="background:#fff;color:#555">إنشاء حساب جديد</button></div>
+<div id="md"><div><span id="mt"></span><div id="mi" style="display:none;flex-direction:column;gap:8px"><input id="me" type="email" placeholder="البريد الإلكتروني" dir="ltr"><input id="mp" type="password" placeholder="كلمة المرور" dir="ltr"></div><button class="hb" id="mok" style="background:#243447;color:#fff"></button><button class="hb" id="mno" style="background:#eee;color:#555">إغلاق</button></div></div></div>
+<div id="setup" style="display:none"><div class="form">
+<div class="logo"><b>رفاهة</b><i>و</i><u>كشتة</u></div>
+<label>اسم اللعبة:</label><input id="gn" placeholder="رفاهة وكشتة" value="رفاهة وكشتة">
+<div class="r2"><div><label>عدد الخلايا:</label><button class="chip" data-k="n" data-v="4">4 خلايا</button><button class="chip on" data-k="n" data-v="5">5 خلايا</button></div>
+<div><label>عدد الجولات:</label><button class="chip" data-k="r" data-v="1">جولة</button><button class="chip on" data-k="r" data-v="3">3 جولات</button></div></div>
+<div class="r2"><div><label style="color:#ff6b66">الفريق الأحمر:</label><input id="to" placeholder="اسم الفريق" style="border-color:#c9524e"></div>
+<div><label style="color:#5fb0ff">الفريق الأزرق:</label><input id="tg" placeholder="اسم الفريق" style="border-color:#4a8fd1"></div></div>
+<button id="go" disabled>إنشاء اللعبة</button>
+</div></div>
+<div id="game">
+<div id="ba"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 50,50" fill="#e53935"/><polygon points="0,100 100,100 50,50" fill="#e53935"/><polygon points="0,0 50,50 0,100" fill="#1e7be0"/><polygon points="100,0 50,50 100,100" fill="#1e7be0"/></svg><div class="brd" id="brd"></div><div id="pz">⏸ متوقفة</div></div>
+<div id="pan">
+<div class="top"><button class="pill" id="opt">خيارات</button><button class="ic" id="pause">⏸</button></div>
+<div id="menu"><button class="sm" id="m1">إعادة الجولة</button><button class="sm" id="m2">إعداد لعبة جديدة</button></div>
+<div id="gn2"></div><div id="rt"></div>
+<div id="qc"><div id="ql"></div><div id="lv"></div><div id="qt"></div><div id="an"></div><button class="sm" id="sa">أظهر الإجابة</button></div>
+<button class="bt" id="ok" disabled>صحيح</button>
+<div id="asg"><button id="a2" data-t="2" style="background:var(--o)"></button><button id="a1" data-t="1" style="background:var(--g)"></button><button data-t="0" style="background:var(--pd)">لا أحد (يعاد الحرف)</button></div>
+<div id="msg"></div>
+<button class="bt" id="nx" disabled>الجولة التالية</button>
+<div class="sr"><button class="ic" id="rr">⟳</button>
+<div><div class="sh" id="so" style="background:var(--o)">0</div><div class="tn" id="no"></div></div>
+<div><div class="sh" id="sg" style="background:var(--g)">0</div><div class="tn" id="ng"></div></div></div>
+</div></div>
+<script>const $=id=>document.getElementById(id);</script>
+<script>
+const D=[["أ","عنصر فلزي خفيف رمزه Al، تُصنع منه علب المشروبات؟","ألمنيوم","متوسط"],
+["ب","عاصمة الأرجنتين؟","بوينس آيرس","صعب"],
+["ت","أداة ترى بها الأجرام البعيدة في السماء؟","تلسكوب","سهل"],
+["ث","مصباح كبير معلق بسقف القاعات الفخمة؟","ثريا","صعب"],
+["ج","أكبر جزيرة في العالم وتتبع الدنمارك؟","جرينلاند","صعب"],
+["ح","ثاني أكبر مدينة سورية وأشهر مدنها التجارية؟","حلب","متوسط"],
+["خ","فاكهة صيفية ناعمة القشرة تشبه المشمش؟","خوخ","سهل"],
+["د","عاصمة سوريا؟","دمشق","سهل"],
+["ر","عاصمة إيطاليا؟","روما","سهل"],
+["ز","المعدن الوحيد السائل في درجة حرارة الغرفة؟","زئبق","صعب"],
+["س","دولة مدينة في جنوب شرق آسيا، عاصمتها هي نفسها؟","سنغافورة","متوسط"],
+["ش","كاتب مسرحية هاملت؟","شكسبير","سهل"],
+["ص","القائد الذي حرر بيت المقدس عام 1187م؟","صلاح الدين","متوسط"],
+["ط","عاصمة اليابان؟","طوكيو","سهل"],
+["ع","عاصمة الأردن؟","عمّان","سهل"],
+["غ","زعيم استقلال الهند الذي اشتهر باللاعنف؟","غاندي","متوسط"],
+["ف","بلد برج إيفل؟","فرنسا","سهل"],
+["ق","عاصمة الخلافة الأموية في الأندلس؟","قرطبة","صعب"],
+["ك","من وصل إلى الأمريكتين عام 1492م؟","كولومبوس","متوسط"],
+["ل","ما يُستخرج من المحار ويُصنع منه عقد ثمين؟","لؤلؤ","سهل"],
+["م","الكوكب المعروف بالأحمر؟","مريخ","متوسط"],
+["ن","العالم الذي ارتبط اسمه بقانون الجاذبية؟","نيوتن","متوسط"],
+["ه","سلسلة الجبال التي فيها أعلى قمة في العالم؟","هيمالايا","صعب"],
+["و","عاصمة الولايات المتحدة الأمريكية؟","واشنطن","متوسط"],
+["ي","النبي الذي ابتلعه الحوت؟","يونس","متوسط"]];
+const EXTRA={"أ":[["من لقب بأمير الشعراء؟","أحمد شوقي","متوسط"]],"ب":[["عاصمة ألمانيا؟","برلين","سهل"]],"ت":[["الدولة التي عاصمتها أنقرة؟","تركيا","متوسط"]],"ث":[["عدد أرجل العنكبوت؟","ثمانية","سهل"]],"ج":[["مدينة سعودية على البحر الأحمر وبوابة الحرمين؟","جدة","سهل"]],"ح":[["أكبر حيوان في العالم؟","حوت","متوسط"]],"خ":[["عالم رياضيات نُسبت إليه الخوارزمية؟","خوارزمي","متوسط"]],"د":[["في أي مدينة يقع برج خليفة؟","دبي","سهل"]],"ر":[["الشهر التاسع في التقويم الهجري؟","رمضان","سهل"]],"ز":[["البئر المباركة قرب الكعبة؟","زمزم","سهل"]],"س":[["فيلسوف يوناني كان معلم أفلاطون؟","سقراط","متوسط"]],"ش":[["لعبة فيها ملك ووزير وفيل وحصان؟","شطرنج","سهل"]],"ص":[["أكبر جزيرة في البحر المتوسط وتتبع إيطاليا؟","صقلية","صعب"]],"ط":[["عميد الأدب العربي صاحب كتاب الأيام؟","طه حسين","متوسط"]],"ع":[["ثاني الخلفاء الراشدين؟","عمر","سهل"]],"غ":[["سفينة تسير تحت سطح الماء؟","غواصة","سهل"]],"ف":[["عاصمة النمسا؟","فيينا","متوسط"]],"ق":[["دولة خليجية عاصمتها الدوحة؟","قطر","سهل"]],"ك":[["ثاني أكبر دولة في العالم مساحةً؟","كندا","متوسط"]],"ل":[["رسام لوحة الموناليزا؟","ليوناردو","متوسط"]],"م":[["عاصمة إسبانيا؟","مدريد","سهل"]],"ن":[["المدينة التي فيها تمثال الحرية؟","نيويورك","سهل"]],"ه":[["بلد الطواحين وزهرة التوليب؟","هولندا","متوسط"]],"و":[["ما نكتب عليه ويُصنع من لب الأشجار؟","ورق","سهل"]],"ي":[["دولة عربية عاصمتها صنعاء؟","يمن","سهل"]]};
+const E2={"أ":["عاصمة اليونان؟|أثينا|س","أصغر قارات العالم مساحة؟|أستراليا|م"],"ب":["عاصمة بلجيكا ومقر الاتحاد الأوروبي؟|بروكسل|م","عاصمة العراق؟|بغداد|س"],"ت":["فاكهة سقطت على نيوتن بحسب الرواية؟|تفاحة|س","ضريح رخامي أبيض في الهند بُني لزوجة الإمبراطور؟|تاج محل|م"],"ث":["زاحف سام بلا أرجل؟|ثعبان|س","جسم في الفضاء لا يفلت منه الضوء؟|ثقب أسود|م"],"ج":["عاصمة إندونيسيا؟|جاكرتا|م","ارتفاع طبيعي ضخم من الأرض أكبر من التل؟|جبل|س"],"ح":["المعركة التي انتصر فيها صلاح الدين عام 1187م؟|حطين|ص","أكلة شعبية تُهرس وتُخلط مع الطحينة؟|حمص|س"],"خ":["عاصمة السودان؟|خرطوم|م","الصحابي الملقب بسيف الله المسلول؟|خالد بن الوليد|م"],"د":["صاحب الكوميديا الإلهية؟|دانتي|ص","ثديي بحري ذكي يقفز فوق الماء؟|دلفين|س"],"ر":["الفصل الذي يلي الشتاء؟|ربيع|س","مكتشف الأشعة السينية؟|رونتجن|ص"],"ز":["اهتزاز مفاجئ للأرض يقاس بمقياس ريختر؟|زلزال|س","الكوكب ذو الحلقات الشهيرة؟|زحل|س"],"س":["ما يُبنى على النهر لحجز الماء؟|سد|س","مدينة على طريق الحرير في أوزبكستان؟|سمرقند|ص"],"ش":["أبرد فصول السنة؟|شتاء|س","أكبر مدينة صينية سكانًا؟|شنغهاي|م"],"ص":["العدد الذي لا قيمة له؟|صفر|س","عاصمة بلغاريا؟|صوفيا|ص"],"ط":["طائر يفرد ريشه الجميل كالمروحة؟|طاووس|س","عاصمة إيران؟|طهران|م"],"ع":["ما تنتجه النحل؟|عسل|س","المجاهد الليبي الملقب بأسد الصحراء؟|عمر المختار|م"],"غ":["ما يتكون منه المطر في السماء؟|غيمة|س","آخر معاقل المسلمين في الأندلس؟|غرناطة|ص"],"ف":["أسرع حيوان بري؟|فهد|م","مدينة مغربية فيها جامعة القرويين؟|فاس|ص"],"ق":["تابع الأرض الطبيعي؟|قمر|س","الحضارة التي هزمها الرومان في شمال أفريقيا؟|قرطاج|ص"],"ك":["حيوان أسترالي يقفز ويحمل صغاره في جيبه؟|كنغر|س","عاصمة أفغانستان؟|كابول|م"],"ل":["عكس النهار؟|ليل|س","دولة عربية عاصمتها طرابلس؟|ليبيا|م"],"م":["جسد محنط عند الفراعنة؟|مومياء|س","عاصمة روسيا؟|موسكو|م"],"ن":["حشرة تصنع العسل؟|نحلة|س","إمبراطور فرنسا الذي هُزم في واترلو؟|نابليون|م"],"ه":["جهاز للاتصال بالصوت؟|هاتف|س","المؤرخ اليوناني الملقب بأبي التاريخ؟|هيرودوت|ص"],"و":["ما بين الجبلين من أرض منخفضة؟|وادي|س","عاصمة بولندا؟|وارسو|م"],"ي":["بلد الشمس المشرقة؟|يابان|س","أبو يوسف عليه السلام؟|يعقوب|م"]};
+const LV={"س":"سهل","م":"متوسط","ص":"صعب"};
+for(const k in E2)EXTRA[k]=(EXTRA[k]||[]).concat(E2[k].map(s=>{const p=s.split("|");return [p[0],p[1],LV[p[2]]];}));
+const X3={"ذ":["المعدن الأصفر الثمين؟|ذهب|س","حيوان بري يعوي ليلًا ويشبه الكلب؟|ذئب|س","أصغر وحدة بناء في المادة؟|ذرة|م"],
+"ض":["حيوان برمائي ينقّ قرب البرك؟|ضفدع|س","ما يجعلنا نرى الأشياء؟|ضوء|س","وقت بين شروق الشمس والظهر؟|ضحى|م"],
+"ظ":["ما يتكون خلف الجسم حين يحجب الضوء؟|ظل|س","حيوان رشيق من فصيلة الغزلان؟|ظبي|م","الصلاة التي تلي منتصف النهار؟|ظهر|س"]};
+const BANK={};
+D.forEach(d=>{BANK[d[0]]=[[d[1],d[2],d[3]]].concat(EXTRA[d[0]]||[]);});
+BANK["ا"]=BANK["أ"];
+for(const k in X3)BANK[k]=X3[k].map(s=>{const p=s.split("|");return [p[0],p[1],LV[p[2]]];});
+const nz=s=>{s=s.replace(/^ال(?=.{3})/,"");const c=s[0];return {"أ":"ا","إ":"ا","آ":"ا","ى":"ي","ؤ":"و","ئ":"ي"}[c]||c;};
+function add(q,a,l){const k=nz(a);(BANK[k]=BANK[k]||[]).push([q,a,l]);}
+const CAP="السعودية:الرياض,مصر:القاهرة,الأردن:عمّان,سوريا:دمشق,لبنان:بيروت,العراق:بغداد,قطر:الدوحة,البحرين:المنامة,عُمان:مسقط,الإمارات:أبوظبي,اليمن:صنعاء,ليبيا:طرابلس,المغرب:الرباط,موريتانيا:نواكشوط,السودان:الخرطوم,الصومال:مقديشو,فلسطين:القدس,تركيا:أنقرة,إيران:طهران,باكستان:إسلام آباد,أفغانستان:كابول,الهند:نيودلهي,الصين:بكين,اليابان:طوكيو,كوريا الجنوبية:سيول,إندونيسيا:جاكرتا,ماليزيا:كوالالمبور,تايلاند:بانكوك,فيتنام:هانوي,الفلبين:مانيلا,روسيا:موسكو,أوكرانيا:كييف,بولندا:وارسو,ألمانيا:برلين,فرنسا:باريس,إيطاليا:روما,إسبانيا:مدريد,البرتغال:لشبونة,بريطانيا:لندن,أيرلندا:دبلن,هولندا:أمستردام,بلجيكا:بروكسل,سويسرا:برن,النمسا:فيينا,اليونان:أثينا,السويد:ستوكهولم,النرويج:أوسلو,الدنمارك:كوبنهاغن,فنلندا:هلسنكي,المجر:بودابست,التشيك:براغ,رومانيا:بوخارست,بلغاريا:صوفيا,صربيا:بلغراد,كرواتيا:زغرب,الولايات المتحدة:واشنطن,كندا:أوتاوا,المكسيك:مكسيكو سيتي,كوبا:هافانا,البرازيل:برازيليا,الأرجنتين:بوينس آيرس,تشيلي:سانتياغو,بيرو:ليما,كولومبيا:بوغوتا,فنزويلا:كاراكاس,أستراليا:كانبرا,نيوزيلندا:ويلينغتون,جنوب أفريقيا:بريتوريا,نيجيريا:أبوجا,كينيا:نيروبي,إثيوبيا:أديس أبابا,غانا:أكرا,السنغال:داكار,أوغندا:كمبالا,تنزانيا:دودوما,زيمبابوي:هراري,كازاخستان:أستانا,أوزبكستان:طشقند,أذربيجان:باكو,جورجيا:تبليسي,أرمينيا:يريفان,نيبال:كاتماندو,بنغلاديش:دكا,سريلانكا:كولومبو,ميانمار:نايبيداو,منغوليا:أولان باتور,كمبوديا:بنوم بنه,لاوس:فيينتيان,إريتريا:أسمرة,تشاد:نجامينا,مالي:باماكو,النيجر:نيامي,الكونغو:كينشاسا,أنغولا:لواندا,زامبيا:لوساكا,موزمبيق:مابوتو,رواندا:كيغالي,ناميبيا:ويندهوك,بوتسوانا:غابورون,هايتي:بورت أو برنس,جامايكا:كينغستون,الإكوادور:كيتو,بوليفيا:لاباز,باراغواي:أسونسيون,أوروغواي:مونتيفيديو,أيسلندا:ريكيافيك,ألبانيا:تيرانا,سلوفاكيا:براتيسلافا,ليتوانيا:فيلنيوس,لاتفيا:ريغا,إستونيا:تالين,بيلاروسيا:مينسك,قبرص:نيقوسيا,مالطا:فاليتا,لوكسمبورغ:لوكسمبورغ";
+CAP.split(",").forEach((p,i)=>{const [c,k]=p.split(":");if(nz(c)==nz(k)&&c==k)return;add("ما عاصمة "+c+"؟",k,i<20?"سهل":"متوسط");add("ما الدولة التي عاصمتها "+k+"؟",c,i<20?"متوسط":"صعب");});
+"H:هيدروجين,He:هيليوم,Li:ليثيوم,B:بورون,C:كربون,N:نيتروجين,O:أكسجين,F:فلور,Ne:نيون,Na:صوديوم,Mg:مغنيسيوم,Al:ألمنيوم,Si:سيليكون,P:فوسفور,S:كبريت,Cl:كلور,Ar:أرغون,K:بوتاسيوم,Ca:كالسيوم,Ti:تيتانيوم,Fe:حديد,Co:كوبالت,Ni:نيكل,Cu:نحاس,Zn:زنك,Br:بروم,Ag:فضة,Sn:قصدير,I:يود,W:تنغستن,Pt:بلاتين,Au:ذهب,Hg:زئبق,Pb:رصاص,Ra:راديوم,U:يورانيوم,Ba:باريوم".split(",").forEach(p=>{const [x,y]=p.split(":");add("ما العنصر الكيميائي الذي رمزه "+x+"؟",y,"متوسط");});
+const QA=`قائد المسلمين في معركة اليرموك؟|خالد بن الوليد|متوسط
+فاتح القسطنطينية؟|محمد الفاتح|متوسط
+القائد الذي عبر مضيق جبل طارق لفتح الأندلس؟|طارق بن زياد|سهل
+سلطان مملوكي انتصر على المغول في عين جالوت؟|قطز|صعب
+قائد فتح مصر في عهد عمر بن الخطاب؟|عمرو بن العاص|متوسط
+أول الخلفاء الراشدين؟|أبو بكر|سهل
+رابع الخلفاء الراشدين؟|علي بن أبي طالب|سهل
+ثالث الخلفاء الراشدين؟|عثمان بن عفان|سهل
+قائد معركة القادسية؟|سعد بن أبي وقاص|صعب
+شاعر النيل؟|حافظ إبراهيم|متوسط
+صاحب أول نوبل عربية في الأدب؟|نجيب محفوظ|متوسط
+صاحب معلقة قفا نبك؟|امرؤ القيس|متوسط
+مؤلف كتاب المقدمة؟|ابن خلدون|متوسط
+عالم البصريات صاحب كتاب المناظر؟|ابن الهيثم|صعب
+مكتشف الدورة الدموية الصغرى؟|ابن النفيس|صعب
+صاحب مبدأ الطفو والحمام الشهير؟|أرخميدس|متوسط
+معلم الإسكندر الأكبر؟|أرسطو|متوسط
+واضع نظرية النسبية؟|أينشتاين|سهل
+مخترع المصباح الكهربائي؟|إديسون|سهل
+مخترع الهاتف؟|غراهام بيل|متوسط
+أول إنسان سافر إلى الفضاء؟|يوري غاغارين|متوسط
+أول من مشى على القمر؟|نيل أرمسترونغ|سهل
+مؤلف الحرب والسلام؟|تولستوي|صعب
+صاحب نظرية التطور؟|داروين|سهل
+مكتشف البنسلين؟|فلمنغ|متوسط
+صاحب نظرية دوران الأرض حول الشمس؟|كوبرنيكوس|متوسط
+مخترع الطباعة بالحروف المتحركة؟|غوتنبرغ|صعب
+مؤلف الإلياذة والأوديسة؟|هوميروس|متوسط
+أول رئيس للولايات المتحدة؟|جورج واشنطن|سهل
+قائد قرطاجي عبر جبال الألب بالفيلة؟|حنبعل|صعب
+ملكة مصر الشهيرة صاحبة أنطونيو؟|كليوباترا|سهل
+فيلسوف يوناني حُكم عليه بالسم؟|سقراط|متوسط
+مؤلف الجريمة والعقاب؟|دوستويفسكي|صعب
+رسام ليلة النجوم؟|فان غوخ|متوسط
+ملك صالح بنى سدًا ضد يأجوج ومأجوج؟|ذو القرنين|صعب
+ملكة سبأ في قصة سليمان؟|بلقيس|متوسط
+صاحب البردة المشهورة؟|البوصيري|صعب
+أديب عربي لقبه الجاحظ؟|الجاحظ|صعب
+صغير الأسد؟|شبل|سهل
+صغير الكلب؟|جرو|سهل
+صغير الحصان؟|مهر|سهل
+صغير الناقة؟|حوار|صعب
+صغير الغزال؟|طلا|صعب
+صغير البقرة؟|عجل|سهل
+صغير الدجاجة؟|كتكوت|سهل
+صغير الضفدع؟|شرغوف|متوسط
+صغير الخروف؟|حمل|سهل
+صغير الماعز؟|جدي|سهل
+صغير الحمار؟|جحش|متوسط
+صغير الحمام؟|زغلول|صعب
+صوت الأسد؟|زئير|سهل
+صوت الحصان؟|صهيل|سهل
+صوت الكلب؟|نباح|سهل
+صوت الغراب؟|نعيق|متوسط
+صوت الضفدع؟|نقيق|متوسط
+صوت القطة؟|مواء|سهل
+صوت البقرة؟|خوار|متوسط
+صوت الحمار؟|نهيق|سهل
+صوت الذئب؟|عواء|سهل
+صوت الحمام؟|هديل|متوسط
+صوت الجمل؟|رغاء|صعب
+صوت الذباب؟|طنين|سهل
+صوت الأفعى؟|فحيح|متوسط
+صوت العصفور؟|زقزقة|سهل
+صوت الخروف؟|ثغاء|صعب
+بيت الأسد؟|عرين|متوسط
+بيت النحل؟|خلية|سهل
+بيت الطائر؟|عش|سهل
+بيت الأرنب؟|جحر|متوسط
+اليوم الذي يلي الاثنين؟|الثلاثاء|سهل
+اليوم الذي يلي الثلاثاء؟|الأربعاء|سهل
+اليوم الذي يلي الأربعاء؟|الخميس|سهل
+اليوم الذي يلي الخميس؟|الجمعة|سهل
+اليوم الذي يلي الجمعة؟|السبت|سهل
+اليوم الذي يلي السبت؟|الأحد|سهل
+الشهر الأول في التقويم الهجري؟|محرم|متوسط
+الشهر الثاني في التقويم الهجري؟|صفر|متوسط
+الشهر السابع في التقويم الهجري؟|رجب|متوسط
+الشهر الثامن في التقويم الهجري؟|شعبان|سهل
+الشهر العاشر في التقويم الهجري؟|شوال|سهل
+الشهر الحادي عشر في التقويم الهجري؟|ذو القعدة|متوسط
+الشهر الثاني عشر في التقويم الهجري؟|ذو الحجة|سهل
+أقرب كواكب المجموعة الشمسية للشمس؟|عطارد|متوسط
+الكوكب الثاني بعدًا عن الشمس ويسمى نجمة الصباح؟|الزهرة|متوسط
+الكوكب الثالث من الشمس؟|الأرض|سهل
+أكبر كواكب المجموعة الشمسية؟|المشتري|سهل
+الكوكب السابع من الشمس؟|أورانوس|صعب
+أبعد كواكب المجموعة الشمسية؟|نبتون|متوسط
+في أي دولة يقع برج إيفل؟|فرنسا|سهل
+في أي دولة يقع الكولوسيوم؟|إيطاليا|سهل
+في أي دولة يقع تاج محل؟|الهند|سهل
+في أي دولة تقع مدينة البتراء الأثرية؟|الأردن|سهل
+في أي دولة يقع ماتشو بيتشو؟|بيرو|متوسط
+في أي دولة يقع قصر الحمراء؟|إسبانيا|متوسط
+في أي دولة تقع أنغكور وات؟|كمبوديا|صعب
+في أي دولة يقع الأكروبوليس؟|اليونان|سهل
+في أي دولة تقع مدينة تدمر الأثرية؟|سوريا|سهل
+في أي دولة تقع آثار بعلبك؟|لبنان|متوسط
+النبات الذي تُستعمل فصوصه في الطبخ ورائحته نفاذة؟|ثوم|سهل
+ذكر البقر؟|ثور|سهل
+ماء متجمد يتساقط في المناطق الباردة؟|ثلج|سهل
+ما يُلبس على الجسم؟|ثوب|سهل
+كثرة المال والممتلكات؟|ثروة|متوسط
+انتفاضة الشعب على الحكم؟|ثورة|متوسط
+مجموع العلوم والمعارف والفنون في أمة؟|ثقافة|متوسط
+جهاز يحفظ الطعام باردًا في المطبخ؟|ثلاجة|سهل
+وحدة زمنية أصغر من الدقيقة؟|ثانية|سهل
+طعام عربي من الخبز واللحم والمرق؟|ثريد|صعب
+الحيوانات التي ترضع صغارها تسمى؟|ثدييات|متوسط
+حشرة تنقل الأمراض وتحوم حول الطعام؟|ذباب|سهل
+جزء من الجسم بين الكتف والكف؟|ذراع|سهل
+الجزء الأسفل من الوجه؟|ذقن|سهل
+ما نخزن به المعلومات في الدماغ؟|ذاكرة|سهل
+القدرة على الفهم وحل المشكلات؟|ذكاء|سهل
+ما يتدلى خلف الحيوان؟|ذيل|سهل
+أعلى نقطة في الجبل؟|ذروة|متوسط
+حاسة اللسان؟|ذوق|سهل
+ما يرتكبه الإنسان من معصية؟|ذنب|متوسط
+ما يبقى في العقل من الماضي؟|ذكرى|متوسط
+ما يغطي الأرض ويحجب الرؤية قرب الأرض صباحًا؟|ضباب|سهل
+سن عريضة للمضغ؟|ضرس|متوسط
+قوة تؤثر على مساحة وتقاس بالباسكال؟|ضغط|متوسط
+عظمة تحمي القفص الصدري؟|ضلع|متوسط
+من يزورك فتكرمه؟|ضيف|سهل
+حيوان مفترس اشتهر بالصوت الشبيه بالضحك؟|ضبع|متوسط
+زاحف صحراوي يؤكل عند بعض العرب؟|ضب|صعب
+ما تفرضه الدولة من مال على الدخل؟|ضريبة|متوسط
+الصوت الداخلي الذي يحاسب النفس؟|ضمير|متوسط
+رتبة عسكرية فوق الجندي؟|ضابط|سهل
+صوت عالٍ مزعج؟|ضجيج|سهل
+شعر مجدول على شكل خصل؟|ضفيرة|متوسط
+جانب النهر؟|ضفة|متوسط
+ما ينمو على أطراف الأصابع ويُقص؟|ظفر|سهل
+ما توضع فيه الرسالة؟|ظرف|سهل
+غياب الضوء ليلًا؟|ظلام|سهل
+حدث طبيعي ملحوظ كالكسوف؟|ظاهرة|متوسط
+ضد العدل؟|ظلم|سهل
+الشعور بالحاجة للماء؟|ظمأ|متوسط
+المحافظة العُمانية الشهيرة بخريفها وعاصمتها صلالة؟|ظفار|صعب
+مدينة سعودية شرقية فيها شركة أرامكو الرئيسية؟|ظهران|متوسط
+السلطان المملوكي الذي قاتل الصليبيين والمغول ولقبه الظاهر؟|ظاهر بيبرس|صعب`;
+QA.split("\n").forEach(s=>{const p=s.split("|");add(p[0],p[1],p[2]);});
+`طائر يرمز للسلام؟|حمامة
+عكس البارد؟|حار
+سائل أبيض نشربه من الأبقار؟|حليب
+مكان مزروع بالأشجار والورود؟|حديقة
+جهاز نكتب عليه ونتصفح الإنترنت؟|حاسوب
+أشهر حيوان للفروسية؟|حصان
+سائل نكتب به بالقلم؟|حبر
+قتال بين دولتين؟|حرب
+عكس الفرح؟|حزن
+ما نأكله بعد الوجبة وطعمه سكري؟|حلوى
+ما نلبسه في القدم؟|حذاء
+ما يقيسه الميزان الحراري؟|حرارة
+ما نربط به الأشياء؟|حبل
+ما نراه أثناء النوم؟|حلم
+ما يفصل بين الدول؟|حدود
+ذكر الغنم الذي يُذبح في العيد؟|خروف
+بيت البدو المصنوع من القماش؟|خيمة
+فصل تتساقط فيه أوراق الأشجار؟|خريف
+خضار أخضر طويل يؤكل في السلطة؟|خيار
+ورقة نرى عليها الدول والمدن؟|خريطة
+ما نلبسه في الإصبع؟|خاتم
+قطعة أثاث نحفظ فيها الملابس؟|خزانة
+مادة من جذع الشجرة تصنع منها الأثاث؟|خشب
+جزء من البحر يدخل اليابسة؟|خليج
+شعور يصيبنا عند الخطر؟|خوف
+طعام يُخبز من الدقيق؟|خبز
+أول زوجات النبي صلى الله عليه وسلم؟|خديجة
+نبات كبير له جذع وأغصان؟|شجرة
+مشروب ساخن من أوراق مجففة؟|شاي
+ما نشعله ليعطي نورًا ويذوب؟|شمعة
+طريق داخل المدينة؟|شارع
+فتحة في الجدار نطل منها؟|شباك
+حدود البحر مع الرمال؟|شاطئ
+عكس الجبان؟|شجاع
+ثلاثون يومًا تقريبًا؟|شهر
+من ينظم المرور ويحفظ الأمن؟|شرطي
+أداة نأكل بها مع السكين؟|شوكة
+ما ينبت على الرأس؟|شعر
+جهة تشرق منها الشمس؟|شرق
+عكس الجنوب؟|شمال
+أخ من نفس الأب والأم؟|شقيق
+طبق ساخن سائل يؤكل بالملعقة؟|شوربة
+طائر أسود يُضرب به المثل في التشاؤم؟|غراب
+حيوان رشيق سريع يشبه الظبي؟|غزال
+مكان النوم في البيت؟|غرفة
+وجبة منتصف النهار؟|غداء
+جهاز لتنظيف الملابس بالماء؟|غسالة
+حالة من المادة ليست صلبة ولا سائلة؟|غاز
+وقت اختفاء الشمس؟|غروب
+مكان كثيف الأشجار؟|غابة
+انفعال شديد ضد الرضا؟|غضب
+فرع الشجرة؟|غصن
+جهة تغرب فيها الشمس؟|غرب
+ذرات ناعمة تتراكم على الأثاث؟|غبار
+أداة تُنخل بها الدقيق؟|غربال
+الأرض التي ننتمي إليها؟|وطن
+جزء من الرأس فيه العينان والأنف؟|وجه
+ما تقيسه الساعة؟|وقت
+ما نضع عليه رؤوسنا للنوم؟|وسادة
+من يتولى إدارة وزارة؟|وزير
+عمل يتقاضى عنه الشخص راتبًا؟|وظيفة
+حيوان ضخم له قرن فوق أنفه؟|وحيد القرن
+شيء يوضع فيه الطعام أو الماء؟|وعاء
+الابن الذكر؟|ولد
+ما نتناوله في الإفطار أو الغداء؟|وجبة
+الإخلاص وعدم الغدر؟|وفاء
+أداة نكتب بها؟|قلم
+حيوان أليف يموء؟|قطة
+عضو يضخ الدم؟|قلب
+مشروب عربي يُقدم للضيوف؟|قهوة
+مسكن الملك؟|قصر
+حيوان يتسلق الأشجار ويشبه الإنسان؟|قرد
+ألوان تظهر في السماء بعد المطر؟|قوس قزح
+ما نمشي به؟|قدم
+مركب صغير على الماء؟|قارب
+ما يُحبس فيه الطائر؟|قفص
+ثوب علوي بأكمام؟|قميص
+ما نضعه على الرأس؟|قبعة
+تجمع سكني أصغر من المدينة؟|قرية
+حيوان جسمه مغطى بالأشواك؟|قنفذ
+حصن عسكري قديم؟|قلعة
+مجموعة قواعد تنظم المجتمع؟|قانون
+أول النهار؟|صباح
+أرض رملية قاحلة؟|صحراء
+كتلة حجرية كبيرة؟|صخرة
+من تحبه وتثق به من الأصحاب؟|صديق
+وعاء كبير مغلق للحفظ؟|صندوق
+ما نسمعه بالأذن؟|صوت
+مادة تنظف اليدين؟|صابون
+أحر فصول السنة؟|صيف
+ما تلتقطه الكاميرا؟|صورة
+نبات شوكي يخزن الماء؟|صبار
+الركن الثاني من أركان الإسلام؟|صلاة
+الامتناع عن الأكل والشرب من الفجر إلى المغرب؟|صيام
+جريدة تصدر يوميًا؟|صحيفة
+عكس المرض؟|صحة
+ما نأكله؟|طعام
+قطعة أثاث نأكل عليها؟|طاولة
+صغير السن من البشر؟|طفل
+من يعالج المرضى؟|طبيب
+مسار تسير عليه السيارات؟|طريق
+من يدرس في مدرسة أو جامعة؟|طالب
+ثمرة حمراء للسلطة والصلصة؟|طماطم
+دقيق القمح؟|طحين
+آلة إيقاع تُضرب بالعصا؟|طبل
+وعاء مسطح نضع فيه الأكل؟|طبق
+حالة الجو؟|طقس
+تراب مخلوط بالماء؟|طين
+من يقود الطائرة؟|طيار
+صف من الناس بانتظار دورهم؟|طابور
+جزء ملون من النبات يفوح عطرًا؟|زهرة
+سائل دهني يُستخرج من الزيتون؟|زيت
+مادة شفافة قابلة للكسر؟|زجاج
+عقد شرعي يجمع رجلًا وامرأة؟|زواج
+شجرة معمرة تُعصر ثمارها لزيت مبارك؟|زيتون
+ما يُصنع من الحليب ويُدهن على الخبز؟|زبدة
+ركن يلتقي فيه ضلعان؟|زاوية
+كثرة الناس والسيارات في مكان؟|زحام
+رفيق الدراسة أو العمل؟|زميل
+قارب صغير؟|زورق
+وعاء زجاجي للمشروبات؟|زجاجة
+الوقت بشكل عام؟|زمن
+ذهاب لرؤية صديق أو قريب؟|زيارة
+ما يعادل أربعًا وعشرين ساعة؟|يوم
+عكس اليسار؟|يمين
+عكس اليمين؟|يسار
+زهرة بيضاء عطرة؟|ياسمين
+طائر يشبه الحمام يسكن الحدائق؟|يمامة
+سفينة فاخرة للنزهة؟|يخت
+من فقد أباه وهو صغير؟|يتيم
+النبي الذي ألقاه إخوته في البئر؟|يوسف
+أول شهور السنة الميلادية؟|يناير
+الشهر السابع الميلادي؟|يوليو
+طائر يرمز للدجاجة والبيض؟|دجاجة
+حيوان ضخم يسكن الغابات الباردة؟|دب
+كراس نكتب فيه الدروس؟|دفتر
+ستون ثانية؟|دقيقة
+سائل أحمر يجري في العروق؟|دم
+ما يصفه الطبيب للمريض؟|دواء
+كيان سياسي له حدود وحكومة؟|دولة
+حصة يقدمها المعلم؟|درس
+مركبة بعجلتين تُدفع بالقدمين؟|دراجة
+نهر يمر ببغداد؟|دجلة
+مادة ناعمة تُصنع من الحبوب المطحونة؟|دقيق
+مكان الدراسة بعد الثانوية؟|جامعة
+ما يفصل بين الغرف؟|جدار
+بناء يعبر النهر؟|جسر
+قطعة يابسة تحيط بها المياه؟|جزيرة
+من يسكن بجانب بيتك؟|جار
+من يخدم في الجيش؟|جندي
+ما يُقرع في المدرسة؟|جرس
+مادة تُصنع من الحليب وتؤكل مع الخبز؟|جبن
+خضار برتقالي يحبه الأرنب؟|جزر
+عكس الشبع؟|جوع
+وثيقة السفر؟|جواز سفر
+دار النعيم؟|جنة
+أكبر عضو في الجسم؟|جلد
+ورق يصدر بالأخبار؟|جريدة
+ما يوضع فيه الأشياء الصغيرة في الثوب؟|جيب
+زاحف ضخم يعيش في الأنهار؟|تمساح
+جهاز نشاهد فيه البرامج؟|تلفاز
+من يبيع ويشتري؟|تاجر
+ورقة تتيح الدخول للمسرح أو القطار؟|تذكرة
+علم أحداث الماضي؟|تاريخ
+ما نزرع فيه النباتات؟|تراب
+فاكهة أقسم الله بها في القرآن؟|تين
+ثمرة صغيرة حمراء أو سوداء؟|توت
+اختبار علمي لإثبات فكرة؟|تجربة
+ورقة بها شهور السنة وأيامها؟|تقويم
+ما يوضع على رأس الملك؟|تاج
+من يدرس في المرحلة الابتدائية؟|تلميذ
+جزء من الجسم فوق الرقبة؟|رأس
+حبيبات صحراوية ناعمة؟|رمل
+هواء متحرك؟|رياح
+فن الألوان على اللوحات؟|رسم
+ما نرسله إلى صديق مكتوبًا؟|رسالة
+عدد مكتوب بالأرقام؟|رقم
+سفر لغرض الاستجمام؟|رحلة
+حبوب بيضاء نطبخها؟|رز
+فاكهة حمراء حباتها كثيرة؟|رمان
+ما يغطي جسم الطائر؟|ريشة
+صوت يأتي بعد البرق؟|رعد
+قطعة خبز مستديرة؟|رغيف
+ما نتنفسه؟|هواء
+ما نقدمه لصديق في مناسبة؟|هدية
+شكل القمر في أول الشهر؟|هلال
+طائر ذكر في قصة سليمان؟|هدهد
+علم الأشكال والمساحات؟|هندسة
+انتقال النبي من مكة إلى المدينة؟|هجرة
+مجموع العظام في الجسم؟|هيكل
+عكس الضجيج؟|هدوء
+ما نحبه ونمارسه وقت الفراغ؟|هواية
+الغاية التي نسعى إليها؟|هدف
+أرض مرتفعة مستوية؟|هضبة
+عضو الإبصار؟|عين
+قطعة قماش تمثل الدولة؟|علم
+فاكهة تؤكل وتصنع زبيبًا؟|عنب
+ما يدور في أسفل السيارة؟|عجلة
+سائل ذو رائحة طيبة نتعطر به؟|عطر
+مناسبة فرح تتبع رمضان؟|عيد
+ما يتكئ عليه الشيخ؟|عصا
+مركز التفكير؟|عقل
+حشرة سامة بذيل معقوف؟|عقرب
+حشرة تنسج شباكًا؟|عنكبوت
+من يبحث في العلوم؟|عالم
+رياح شديدة مصحوبة بأمطار؟|عاصفة
+الاطمئنان لشخص؟|ثقة
+مبلغ تدفعه مقابل سلعة؟|ثمن
+ما تحمله الشجرة وتؤكل؟|ثمرة
+مرادف للفم في الشعر؟|ثغر
+عكس الفقير؟|ثري
+الاستمرار دون تغيّر؟|ثبات
+عكس الخفة؟|ثقل
+أخذ الحق بالانتقام من الظالم؟|ثأر
+مركبة بأربع عجلات؟|سيارة
+ما نراه فوقنا بلونه الأزرق؟|سماء
+حيوان يعيش في الماء ويتنفس بالخياشيم؟|سمك
+مكان النوم؟|سرير
+مركب كبير يعبر البحر؟|سفينة
+أداة قياس الوقت؟|ساعة
+ما نصعد عليه بين طابقين؟|سلم
+ما يكتب عليه المعلم؟|سبورة
+مكان للبيع والشراء؟|سوق
+أداة حادة للقتال؟|سيف
+حشرة جميلة بأجنحة ملونة؟|فراشة
+قارض صغير يخاف القطط؟|فأر
+تؤكل مثل التفاح والبرتقال؟|فاكهة
+أحد أربعة في السنة كالشتاء؟|فصل
+مكان يبيت فيه المسافر؟|فندق
+جهاز لخبز الطعام؟|فرن
+أداة لتنظيف الأسنان؟|فرشاة
+من يزرع الأرض؟|فلاح
+عضو للأكل والكلام؟|فم
+غذاء حيواني نطبخه ونشويه؟|لحم
+سائل أبيض يُصنع منه الزبادي؟|لبن
+عضو في الفم للتذوق والكلام؟|لسان
+ما يلهو به الأطفال؟|لعبة
+عمل فني على قماش أو ورق؟|لوحة
+ما يميّز الأحمر عن الأزرق؟|لون
+حمض أصفر يُضاف للعصير؟|ليمون
+وسيلة التفاهم بين الناس؟|لغة
+ما يغطي الجسم؟|لباس
+شعر الوجه عند الرجل؟|لحية`.split("\n").forEach(s=>{const p=s.split("|");add(p[0],p[1],"سهل");});
+`الاعتقاد دون يقين؟|ظن|متوسط
+من يتميز بخفة الدم؟|ظريف|سهل
+لاعب دفاع على أطراف الملعب؟|ظهير|متوسط
+ما يُملأ به السلاح من رصاص؟|ذخيرة|متوسط
+خوف شديد مفاجئ؟|ذعر|متوسط
+ما يصيب الزهرة حين تفقد الماء؟|ذبول|متوسط
+ضد الأنثى؟|ذكر|سهل
+ما نفعله عند سماع نكتة؟|ضحك|سهل
+إكرام الضيف؟|ضيافة|سهل
+عكس النفع؟|ضرر|سهل
+عكس القوة؟|ضعف|سهل
+كفالة تضمن إصلاح الجهاز؟|ضمان|متوسط
+زهرة حمراء رمز الحب؟|وردة|سهل
+جزء أخضر من الشجرة؟|ورقة|سهل
+أرض منخفضة بين جبلين؟|وادي|سهل
+ما يقيسه الميزان؟|وزن|سهل
+ثدي طائر ينام معلقًا ويخرج ليلًا؟|وطواط|متوسط
+ما تحتاجه السيارة لتعمل؟|وقود|سهل
+قطعة قماش تُلف على الرقبة؟|وشاح|متوسط
+ألم؟|وجع|سهل
+مكان تصليح السيارات؟|ورشة|سهل
+التزام بفعل شيء مستقبلًا؟|وعد|سهل
+عضو نكتب ونصافح به؟|يد|سهل
+حجر كريم أحمر؟|ياقوت|متوسط
+عكس النوم؟|يقظة|سهل
+أبو يوسف عليه السلام؟|يعقوب|متوسط
+ابن زكريا عليهما السلام؟|يحيى|صعب
+حشرة بأجنحة شفافة تحوم قرب الماء؟|يعسوب|صعب
+طور من حياة الفراشة قبل الشرنقة؟|يرقة|متوسط
+ماء يخرج من باطن الأرض؟|ينبوع|متوسط`.split("\n").forEach(s=>{const p=s.split("|");add(p[0],p[1],p[2]);});
+for(const k in BANK){const s=new Set();BANK[k]=BANK[k].filter(x=>{if(s.has(x[1]))return false;s.add(x[1]);return true;});}
+
+</script>
+<script>
+if(typeof BANK==="undefined")window.BANK={};
+const ORD=["ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ي"];
+let cfg={r:3,n:5},st,L,cur=-1,curQ,rd=1,wins=[0,0],over=false,fin=false,pz=false,nm=["","",""],used;
+try{const saved=JSON.parse(localStorage.getItem("hu2")||"[]");used=new Set(Array.isArray(saved)?saved:[])}catch(e){used=new Set()}
+for(let i=0;i<9;i++){const d=document.createElement("div");d.className="deco";d.textContent=ORD[(i*7+3)%28];d.style.cssText="top:"+[2,12,30,48,62,78,90,20,70][i]+"%;"+(i%2?"left":"right")+":"+[-40,-60,-30,-50,-20,-60,-40,-90,-80][i]+"px;transform:rotate("+(i*17%40-20)+"deg)";$("setup").prepend(d);}
+document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{cfg[c.dataset.k]=+c.dataset.v;document.querySelectorAll('.chip[data-k="'+c.dataset.k+'"]').forEach(x=>x.classList.toggle("on",x===c));});
+function chk(){$("go").disabled=!($("gn").value.trim()&&$("to").value.trim()&&$("tg").value.trim());}
+["gn","to","tg"].forEach(i=>$(i).oninput=chk);
+$("go").onclick=()=>{try{if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().then(()=>{if(screen.orientation&&screen.orientation.lock)return screen.orientation.lock("landscape");}).catch(()=>{});}catch(e){}nm[2]=$("to").value.trim();nm[1]=$("tg").value.trim();$("gn2").textContent=$("gn").value.trim();$("no").textContent=nm[2];$("ng").textContent=nm[1];$("a2").textContent="🟥 "+nm[2];$("a1").textContent="🟦 "+nm[1];wins=[0,0];rd=1;fin=false;$("setup").style.display="none";$("game").style.display="flex";startRound();};
+function startRound(){
+ pz=false;$("pz").style.display="none";$("pause").textContent="⏸";
+ const n=cfg.n;L=n==5?ORD.slice(0,25):ORD.slice().sort(()=>Math.random()-.5).slice(0,n*n).sort((a,b)=>ORD.indexOf(a)-ORD.indexOf(b));
+ st=L.map(()=>0);cur=-1;over=false;
+ const b=$("brd");b.innerHTML="";
+ for(let r=0;r<n;r++){const w=document.createElement("div");w.className="rw";
+  for(let c=0;c<n;c++){const i=r*n+c;const h=document.createElement("button");h.className="hx";h.id="h"+i;h.innerHTML="<i>"+L[i]+"</i>";h.onclick=()=>pick(i);w.appendChild(h);}
+  b.appendChild(w);}
+ $("rt").textContent="الجولة "+["الأولى","الثانية","الثالثة"][rd-1];
+ $("qc").style.display="none";$("asg").style.display="none";$("msg").textContent="";$("ok").disabled=true;$("nx").disabled=true;$("nx").textContent="الجولة التالية";$("menu").style.display="none";
+ sc();fit();
+}
+function fit(){const a=$("ba"),n=cfg.n;if(!a.clientWidth)return;const w=Math.min(a.clientWidth/(n+.5),a.clientHeight/(.866*n+.29))*.95;document.documentElement.style.setProperty("--w",w+"px");}
+let _f;const sched=()=>{cancelAnimationFrame(_f);_f=requestAnimationFrame(fit)};window.onresize=sched;try{new ResizeObserver(sched).observe($("ba"))}catch(e){}window.addEventListener("orientationchange",()=>setTimeout(sched,250));if(window.visualViewport)visualViewport.addEventListener("resize",sched);
+function sc(){$("so").textContent=wins[1];$("sg").textContent=wins[0];}
+function pick(i,f){
+ if(i===cur&&!f)return;if(st[i]||over||pz)return;
+ if(cur>=0)$("h"+cur).classList.remove("sel");
+ cur=i;$("h"+i).classList.add("sel");
+ const pool=BANK[L[i]]||[];let fr=pool.filter(x=>!used.has(x[0]));if(!fr.length){pool.forEach(x=>used.delete(x[0]));fr=pool;}
+ if(!fr.length){$("msg").textContent="تعذر تحميل أسئلة هذا الحرف";cur=-1;return;}
+ curQ=fr[Math.random()*fr.length|0];used.add(curQ[0]);
+ saveUsed();
+ $("ql").textContent=L[i];$("lv").textContent="الصعوبة: "+curQ[2];$("qt").textContent=curQ[0];$("an").textContent="";
+ $("qc").style.display="block";$("sa").style.display="";$("asg").style.display="none";$("ok").disabled=false;
+}
+$("sa").onclick=()=>{if(pz||cur<0||!curQ)return;$("an").textContent=curQ[1];$("sa").style.display="none";};
+$("ok").onclick=()=>{if(pz||cur<0||!curQ)return;$("asg").style.display="flex";$("ok").disabled=true;};
+$("rr").onclick=()=>{if(cur>=0)pick(cur,1);};
+document.querySelectorAll("#asg button").forEach(b=>b.onclick=()=>{
+ if(pz||cur<0||over)return;
+ const t=+b.dataset.t,h=$("h"+cur);h.classList.remove("sel");
+ if(t){st[cur]=t;h.classList.add(t==2?"o":"g");}
+ cur=-1;$("qc").style.display="none";$("asg").style.display="none";$("ok").disabled=true;
+ if(t&&won(t)){over=true;wins[t-1]++;sc();const m=wins[t-1]>=Math.floor(cfg.r/2)+1;
+  $("msg").textContent=m?"🏆 فاز "+nm[t]+" باللعبة!":"🎉 فاز "+nm[t]+" بالجولة!";
+  if(m){fin=true;$("nx").textContent="لعبة جديدة";}$("nx").disabled=false;}
+});
+$("nx").onclick=()=>{if(fin){$("game").style.display="none";$("setup").style.display="block";}else{rd++;startRound();}};
+$("pause").onclick=()=>{pz=!pz;$("pz").style.display=pz?"flex":"none";$("pause").textContent=pz?"▶":"⏸";};
+$("opt").onclick=()=>{const m=$("menu");m.style.display=m.style.display=="flex"?"none":"flex";};
+$("m1").onclick=()=>{startRound();};
+$("m2").onclick=()=>{$("game").style.display="none";$("setup").style.display="block";};
+function nb(r,c){const n=cfg.n,o=[[r,c-1],[r,c+1]];
+ if(r%2==0)o.push([r-1,c-1],[r-1,c],[r+1,c-1],[r+1,c]);else o.push([r-1,c],[r-1,c+1],[r+1,c],[r+1,c+1]);
+ return o.filter(([a,b])=>a>=0&&a<n&&b>=0&&b<n);}
+function won(p){const n=cfg.n,seen=new Set(),q=[];
+ for(let k=0;k<n;k++){const [r,c]=p==2?[0,k]:[k,0];if(st[r*n+c]==p){q.push([r,c]);seen.add(r*n+c);}}
+ while(q.length){const [r,c]=q.pop();if(p==2&&r==n-1)return true;if(p==1&&c==n-1)return true;
+  for(const [a,b] of nb(r,c)){const i=a*n+b;if(st[i]==p&&!seen.has(i)){seen.add(i);q.push([a,b]);}}}
+ return false;}
+</script>
+<script>
+const PK="rk_prem",TK="rk_try";
+const lsg=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lss=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+let prem=lsg(PK)=="1",tries=lsg(TK)===null?3:Math.max(0,+lsg(TK)||0);
+try{for(let i=0;i<8;i++){const d=document.createElement("div");d.className="deco";d.textContent=ORD[(i*5+2)%28];d.style.cssText="top:"+[2,18,40,62,80,8,50,88][i]+"%;"+(i%2?"left":"right")+":"+[-50,-70,-40,-60,-50,-90,-100,-80][i]+"px;opacity:.5";$("home").prepend(d);}}catch(e){}
+function refresh(){$("hlog").textContent=me?"تسجيل الخروج":"دخول";$("hreg").style.display=me?"none":"";$("hnote").textContent=prem?"✅ اللعبة مفعّلة مدى الحياة":(tries>0?"للاستمرار فعّل اللعبة أو جرّب المحاولات المجانية":"انتهت المحاولات المجانية، فعّل اللعبة للاستمرار");
+ $("hplay").style.display=prem?"":"none";$("hbuy").style.display=prem?"none":"";$("hfree").style.display=prem?"none":"";
+ $("hfree").disabled=tries<=0;$("hfree").textContent="جرب النسخة المجانية ("+tries+" من 3 متبقية)";}
+function modal(t,ok,fn){$("mi").style.display="none";$("mt").textContent=t;$("mok").style.display=ok?"":"none";$("mok").textContent=ok||"";$("mok").onclick=()=>{$("md").style.display="none";fn&&fn();};$("md").style.display="flex";}
+$("mno").onclick=()=>{$("md").style.display="none";};
+function toSetup(){$("home").style.display="none";$("setup").style.display="block";}
+function showHome(){$("game").style.display="none";$("setup").style.display="none";$("home").style.display="flex";refresh();}
+$("hplay").onclick=$("hfree").onclick=toSetup;
+$("hbuy").onclick=()=>modal("باقي تعديلات بسيطة على وسائل الدفع، وبتتفعّل قريبًا بإذن الله 🙏");
+$("hrest").onclick=()=>modal(prem?"مشترياتك مفعّلة على هذا الجهاز":"لا توجد مشتريات محفوظة على هذا الجهاز");
+let me=lsg("rk_me");
+const sha=async s=>[...new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,"0")).join("");
+function authModal(reg){modal(reg?"إنشاء حساب جديد (يُحفظ حاليًا على هذا الجهاز)":"تسجيل الدخول","x");$("mi").style.display="flex";$("me").value=$("mp").value="";$("mok").textContent=reg?"إنشاء الحساب":"دخول";
+$("mok").onclick=async()=>{const e=$("me").value.trim().toLowerCase(),p=$("mp").value;
+if(!/^\S+@\S+\.\S+$/.test(e)||p.length<6){$("mt").textContent="أدخل بريدًا صحيحًا وكلمة مرور 6 أحرف على الأقل";return;}
+let h;try{h=await sha(p);}catch(x){$("mt").textContent="تعذر إنشاء الحساب في هذا المتصفح";return;}
+if(reg){if(lsg("rk_acc_"+e)){$("mt").textContent="هذا البريد مسجّل من قبل، جرّب الدخول";return;}lss("rk_acc_"+e,h);if(lsg("rk_acc_"+e)!==h){$("mt").textContent="تعذر حفظ الحساب على هذا الجهاز. اسمح بتخزين بيانات الموقع ثم أعد المحاولة";return;}}
+else if(lsg("rk_acc_"+e)!==h){$("mt").textContent="البريد أو كلمة المرور غير صحيحة";return;}
+me=e;lss("rk_me",e);$("md").style.display="none";refresh();};}
+$("hlog").onclick=()=>{if(me){me=null;lss("rk_me","");refresh();}else authModal(false);};
+$("hreg").onclick=()=>authModal(true);
+$("hinfo").onclick=()=>modal("رفاهة وكشتة: لعبة حروف بين فريقين. الأحمر يوصل من الأعلى للأسفل، والأزرق من اليسار لليمين.");
+$("hhelp").onclick=()=>modal("اختر خلية، اقرأ السؤال، وإذا أجاب الفريق صح تصير الخلية بلونه. أول فريق يوصل بين جهتيه يفوز بالجولة.");
+const _go=$("go").onclick;
+$("go").onclick=function(e){if(!prem){if(tries<=0){showHome();return;}tries--;lss(TK,tries);}_go.call(this,e);hint();};
+let _su;function saveUsed(){clearTimeout(_su);_su=setTimeout(flushUsed,600);}
+function flushUsed(){try{localStorage.setItem("hu2",JSON.stringify([...used]))}catch(e){}}
+addEventListener("pagehide",flushUsed);document.addEventListener("visibilitychange",()=>{if(document.hidden)flushUsed();});
+const rot=$("rot");function hint(){if(matchMedia("(orientation:portrait)").matches){rot.classList.add("show");setTimeout(()=>rot.classList.remove("show"),4000);}}
+document.addEventListener("focusin",e=>{if(e.target.tagName=="INPUT")setTimeout(()=>{try{e.target.scrollIntoView({block:"center",behavior:"smooth"})}catch(x){}},300);});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&typeof sched==="function")sched();});
+addEventListener("pageshow",()=>{if(typeof sched==="function")sched();});
+if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}
+$("installHelp").onclick=()=>modal("على الآيفون: افتح رابط الموقع في Safari، ثم المشاركة ← إضافة إلى الشاشة الرئيسية ← إضافة. فعّل «فتح كتطبيق ويب» إن ظهر. يلزم الاتصال أول مرة لحفظ ملفات اللعبة؛ الخط قد يستخدم خط الجهاز دون إنترنت.");
+document.querySelectorAll("button").forEach(b=>b.type="button");
+$("pause").setAttribute("aria-label","إيقاف أو استئناف الجولة");
+$("rr").setAttribute("aria-label","تغيير السؤال");
+$("md").setAttribute("role","dialog");$("md").setAttribute("aria-modal","true");$("md").setAttribute("aria-labelledby","mt");
+refresh();
+</script>
+</body>
+</html>

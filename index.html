@@ -121,8 +121,15 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
 </head>
 <body><noscript><div style="position:fixed;inset:0;z-index:999;background:#243447;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font:22px/1.8 Tahoma,Arial,sans-serif">هذه المعاينة لا تشغّل الجافاسكربت، فالأزرار لن تعمل.<br>افتح اللعبة من متصفح Safari أو Chrome عبر رابط الموقع.</div></noscript><div id="rot">🔄 قلّب الجوال أفقيًا للحصول على أفضل عرض</div>
 <div id="md" role="dialog" aria-modal="true" aria-labelledby="mt"><div><span id="mt"></span><button class="hb" id="mno" style="background:#eee;color:#555">إغلاق</button></div></div>
-<div id="setup"><div class="form">
-<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="sm" id="hhelp">طريقة اللعب</button><button class="sm" id="installHelp">إضافة للشاشة الرئيسية</button></div>
+<div id="home">
+<button class="hn" id="hinfo" style="left:14px">المعلومات</button>
+<button class="hn" id="hhelp" style="right:14px;background:#ffe600;color:#333;border:0">مساعدة</button>
+<div class="hc"><div class="logo"><b>رفاهة</b><i>و</i><u>كشتة</u></div>
+<button class="hb" id="hplay" style="background:#25d366;color:#07391b">ابدأ اللعبة</button>
+<button class="sm" id="installHelp">إضافة للشاشة الرئيسية</button></div>
+</div>
+<div id="setup" style="display:none"><div class="form">
+<button class="sm" id="backHome">الصفحة الرئيسية</button>
 <div class="logo"><b>رفاهة</b><i>و</i><u>كشتة</u></div>
 <label>اسم اللعبة:</label><input id="gn" placeholder="رفاهة وكشتة" value="رفاهة وكشتة">
 <div class="r2"><div><label>عدد الخلايا:</label><button class="chip" data-k="n" data-v="4">4 خلايا</button><button class="chip on" data-k="n" data-v="5">5 خلايا</button></div>
@@ -670,6 +677,10 @@ function won(p){const n=cfg.n,seen=new Set(),q=[];
  return false;}
 </script>
 <script>
+for(let i=0;i<8;i++){const d=document.createElement("div");d.className="deco";d.textContent=ORD[(i*5+2)%28];d.style.cssText="top:"+[2,18,40,62,80,8,50,88][i]+"%;"+(i%2?"left":"right")+":"+[-50,-70,-40,-60,-50,-90,-100,-80][i]+"px;opacity:.5";$("home").prepend(d);}
+$("hplay").onclick=()=>{$("home").style.display="none";$("setup").style.display="block";};
+$("backHome").onclick=()=>{$("setup").style.display="none";$("home").style.display="flex";};
+$("hinfo").onclick=()=>modal("رفاهة وكشتة: لعبة حروف بين فريقين. الأحمر يوصل من الأعلى للأسفل، والأزرق من اليسار لليمين.");
 function modal(t){$("mt").textContent=t;$("md").style.display="flex";}
 $("mno").onclick=()=>{$("md").style.display="none";};
 $("hhelp").onclick=()=>modal("اختر خلية، اقرأ السؤال، وإذا أجاب الفريق صح تصير الخلية بلونه. الأحمر يوصل من الأعلى للأسفل، والأزرق من اليسار لليمين. أول فريق يوصل بين جهتيه يفوز بالجولة.");

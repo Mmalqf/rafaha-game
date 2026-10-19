@@ -120,18 +120,9 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
 </style>
 </head>
 <body><noscript><div style="position:fixed;inset:0;z-index:999;background:#243447;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font:22px/1.8 Tahoma,Arial,sans-serif">هذه المعاينة لا تشغّل الجافاسكربت، فالأزرار لن تعمل.<br>افتح اللعبة من متصفح Safari أو Chrome عبر رابط الموقع.</div></noscript><div id="rot">🔄 قلّب الجوال أفقيًا للحصول على أفضل عرض</div>
-<div id="home"><button class="hn" id="hinfo" style="left:14px">المعلومات</button><button class="hn" id="hhelp" style="right:14px;background:#ffe600;color:#333;border:0">مساعدة</button>
-<div class="hc"><div class="logo"><b>رفاهة</b><i>و</i><u>كشتة</u></div>
-<div id="hnote"></div><button class="sm" id="installHelp">إضافة للشاشة الرئيسية</button>
-<button class="hb" id="hplay" style="background:#25d366;color:#07391b">ابدأ اللعبة</button>
-<button class="hb" id="hbuy" style="background:#26c6da;color:#07383f">شراء تفعيل مدى الحياة (14.99 ر.س.)</button>
-<button class="hb" id="hrest" style="background:#fff;color:#555">استعادة المشتريات</button>
-<button class="hb" id="hfree" style="background:#64425f;color:#ffe600;border:2px solid #ffe600"></button>
-<div style="margin-top:6px">لديك حساب مسبقًا؟</div>
-<button class="hb" id="hlog" style="background:#25d366;color:#07391b">دخول</button>
-<button class="hb" id="hreg" style="background:#fff;color:#555">إنشاء حساب جديد</button></div>
-<div id="md"><div><span id="mt"></span><div id="mi" style="display:none;flex-direction:column;gap:8px"><input id="me" type="email" placeholder="البريد الإلكتروني" dir="ltr"><input id="mp" type="password" placeholder="كلمة المرور" dir="ltr"></div><button class="hb" id="mok" style="background:#243447;color:#fff"></button><button class="hb" id="mno" style="background:#eee;color:#555">إغلاق</button></div></div></div>
-<div id="setup" style="display:none"><div class="form">
+<div id="md" role="dialog" aria-modal="true" aria-labelledby="mt"><div><span id="mt"></span><button class="hb" id="mno" style="background:#eee;color:#555">إغلاق</button></div></div>
+<div id="setup"><div class="form">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="sm" id="hhelp">طريقة اللعب</button><button class="sm" id="installHelp">إضافة للشاشة الرئيسية</button></div>
 <div class="logo"><b>رفاهة</b><i>و</i><u>كشتة</u></div>
 <label>اسم اللعبة:</label><input id="gn" placeholder="رفاهة وكشتة" value="رفاهة وكشتة">
 <div class="r2"><div><label>عدد الخلايا:</label><button class="chip" data-k="n" data-v="4">4 خلايا</button><button class="chip on" data-k="n" data-v="5">5 خلايا</button></div>
@@ -679,35 +670,11 @@ function won(p){const n=cfg.n,seen=new Set(),q=[];
  return false;}
 </script>
 <script>
-const PK="rk_prem",TK="rk_try";
-const lsg=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lss=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
-let prem=lsg(PK)=="1",tries=lsg(TK)===null?3:Math.max(0,+lsg(TK)||0);
-try{for(let i=0;i<8;i++){const d=document.createElement("div");d.className="deco";d.textContent=ORD[(i*5+2)%28];d.style.cssText="top:"+[2,18,40,62,80,8,50,88][i]+"%;"+(i%2?"left":"right")+":"+[-50,-70,-40,-60,-50,-90,-100,-80][i]+"px;opacity:.5";$("home").prepend(d);}}catch(e){}
-function refresh(){$("hlog").textContent=me?"تسجيل الخروج":"دخول";$("hreg").style.display=me?"none":"";$("hnote").textContent=prem?"✅ اللعبة مفعّلة مدى الحياة":(tries>0?"للاستمرار فعّل اللعبة أو جرّب المحاولات المجانية":"انتهت المحاولات المجانية، فعّل اللعبة للاستمرار");
- $("hplay").style.display=prem?"":"none";$("hbuy").style.display=prem?"none":"";$("hfree").style.display=prem?"none":"";
- $("hfree").disabled=tries<=0;$("hfree").textContent="جرب النسخة المجانية ("+tries+" من 3 متبقية)";}
-function modal(t,ok,fn){$("mi").style.display="none";$("mt").textContent=t;$("mok").style.display=ok?"":"none";$("mok").textContent=ok||"";$("mok").onclick=()=>{$("md").style.display="none";fn&&fn();};$("md").style.display="flex";}
+function modal(t){$("mt").textContent=t;$("md").style.display="flex";}
 $("mno").onclick=()=>{$("md").style.display="none";};
-function toSetup(){$("home").style.display="none";$("setup").style.display="block";}
-function showHome(){$("game").style.display="none";$("setup").style.display="none";$("home").style.display="flex";refresh();}
-$("hplay").onclick=$("hfree").onclick=toSetup;
-$("hbuy").onclick=()=>modal("باقي تعديلات بسيطة على وسائل الدفع، وبتتفعّل قريبًا بإذن الله 🙏");
-$("hrest").onclick=()=>modal(prem?"مشترياتك مفعّلة على هذا الجهاز":"لا توجد مشتريات محفوظة على هذا الجهاز");
-let me=lsg("rk_me");
-const sha=async s=>[...new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,"0")).join("");
-function authModal(reg){modal(reg?"إنشاء حساب جديد (يُحفظ حاليًا على هذا الجهاز)":"تسجيل الدخول","x");$("mi").style.display="flex";$("me").value=$("mp").value="";$("mok").textContent=reg?"إنشاء الحساب":"دخول";
-$("mok").onclick=async()=>{const e=$("me").value.trim().toLowerCase(),p=$("mp").value;
-if(!/^\S+@\S+\.\S+$/.test(e)||p.length<6){$("mt").textContent="أدخل بريدًا صحيحًا وكلمة مرور 6 أحرف على الأقل";return;}
-let h;try{h=await sha(p);}catch(x){$("mt").textContent="تعذر إنشاء الحساب في هذا المتصفح";return;}
-if(reg){if(lsg("rk_acc_"+e)){$("mt").textContent="هذا البريد مسجّل من قبل، جرّب الدخول";return;}lss("rk_acc_"+e,h);if(lsg("rk_acc_"+e)!==h){$("mt").textContent="تعذر حفظ الحساب على هذا الجهاز. اسمح بتخزين بيانات الموقع ثم أعد المحاولة";return;}}
-else if(lsg("rk_acc_"+e)!==h){$("mt").textContent="البريد أو كلمة المرور غير صحيحة";return;}
-me=e;lss("rk_me",e);$("md").style.display="none";refresh();};}
-$("hlog").onclick=()=>{if(me){me=null;lss("rk_me","");refresh();}else authModal(false);};
-$("hreg").onclick=()=>authModal(true);
-$("hinfo").onclick=()=>modal("رفاهة وكشتة: لعبة حروف بين فريقين. الأحمر يوصل من الأعلى للأسفل، والأزرق من اليسار لليمين.");
-$("hhelp").onclick=()=>modal("اختر خلية، اقرأ السؤال، وإذا أجاب الفريق صح تصير الخلية بلونه. أول فريق يوصل بين جهتيه يفوز بالجولة.");
+$("hhelp").onclick=()=>modal("اختر خلية، اقرأ السؤال، وإذا أجاب الفريق صح تصير الخلية بلونه. الأحمر يوصل من الأعلى للأسفل، والأزرق من اليسار لليمين. أول فريق يوصل بين جهتيه يفوز بالجولة.");
 const _go=$("go").onclick;
-$("go").onclick=function(e){if(!prem){if(tries<=0){showHome();return;}tries--;lss(TK,tries);}_go.call(this,e);hint();};
+$("go").onclick=function(e){_go.call(this,e);hint();};
 let _su;function saveUsed(){clearTimeout(_su);_su=setTimeout(flushUsed,600);}
 function flushUsed(){try{localStorage.setItem("hu2",JSON.stringify([...used]))}catch(e){}}
 addEventListener("pagehide",flushUsed);document.addEventListener("visibilitychange",()=>{if(document.hidden)flushUsed();});
@@ -721,7 +688,7 @@ document.querySelectorAll("button").forEach(b=>b.type="button");
 $("pause").setAttribute("aria-label","إيقاف أو استئناف الجولة");
 $("rr").setAttribute("aria-label","تغيير السؤال");
 $("md").setAttribute("role","dialog");$("md").setAttribute("aria-modal","true");$("md").setAttribute("aria-labelledby","mt");
-refresh();
+chk();
 </script>
 </body>
 </html>

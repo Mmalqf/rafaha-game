@@ -1,5 +1,5 @@
 const PREFIX = 'rafaha-' + self.registration.scope + '-';
-const CACHE = PREFIX + 'v2';
+const CACHE = PREFIX + 'v3';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 const allowed = new Set(FILES.map(path => new URL(path, self.registration.scope).href));
 self.addEventListener('install', event => {

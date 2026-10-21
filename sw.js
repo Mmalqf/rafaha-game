@@ -1,6 +1,6 @@
 const PREFIX = 'rafaha-' + self.registration.scope + '-';
-const CACHE = PREFIX + 'v5-bank-20261020';
-const FILES = ['./', './index.html', './questions.js?v=20261020-1', './question-history.js?v=20261020-1', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+const CACHE = PREFIX + 'v6-labda-20261021';
+const FILES = ['./', './index.html', './questions.js?v=20261021-1', './question-history.js?v=20261021-1', './question-bank.js?v=20261021-1', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 const allowed = new Set(FILES.map(path => new URL(path, self.registration.scope).href));
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));

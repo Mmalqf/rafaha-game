@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png"><meta name="apple-mobile-web-app-title" content="رفاهة وكشتة"><meta name="theme-color" content="#243447"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png"><meta name="apple-mobile-web-app-title" content="حروف لبدةَ"><meta name="theme-color" content="#243447"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<title>رفاهة وكشتة</title>
+<title>حروف لبدةَ</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;800&display=swap" rel="stylesheet">
 <style>
 :root{--p:#243447;--pd:#17222f;--o:#e53935;--g:#1e7be0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -117,6 +117,16 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
  #pan{width:clamp(220px,40vw,300px)}
  button,.ic{min-height:44px}.ic{width:44px;height:44px;flex-shrink:0}
 }
+/* Home controls and the question bank share the existing palette. */
+.logo{line-height:1.25}.logo u{padding-bottom:.1em}
+.level-label{margin:12px 0 5px;font-size:17px}.level-hint{font-size:14px;line-height:1.7;text-align:center;opacity:.85;margin:6px 0 12px}
+.level-select,select{font:inherit;font-size:16px;min-height:46px;border:2px solid #96a9bb;border-radius:18px;background:#17222f;color:#fff;padding:8px 12px;max-width:100%}
+.level-select{width:100%}.hc{max-width:460px}.hc .hb{width:100%}
+#bank[hidden]{display:none}#bank{min-height:100vh;min-height:100dvh;padding:24px 18px calc(32px + env(safe-area-inset-bottom,0px));-webkit-user-select:text;user-select:text}
+.bank-wrap{max-width:960px;margin:auto}#bank h1{color:#ffe600;font-size:clamp(26px,6vw,38px);line-height:1.5}.bank-filters{display:flex;gap:12px;flex-wrap:wrap}.bank-filters label{flex:1 1 170px;margin:0}.bank-filters input,.bank-filters select{display:block;width:100%;margin-top:6px}
+.bank-item{margin:12px 0;padding:16px 18px;border:1px solid #60758b;border-radius:18px;background:#17222f;line-height:1.8}.bank-meta{font-size:14px;color:#b9d2e8}.bank-item h2{font-size:19px;margin:6px 0 10px;font-weight:500}.bank-item summary{cursor:pointer;color:#ffe600;min-height:44px;padding:8px 0}.bank-answer{font-size:21px;color:#7be2ad;white-space:pre-wrap}.bank-pages{display:flex;align-items:center;justify-content:center;gap:16px;margin:20px 0}.bank-pages button:disabled{opacity:.4;cursor:default}
+@media(orientation:landscape) and (max-height:520px){.hc{display:flex;flex-direction:column;gap:6px;max-width:460px}.hc .logo{margin-bottom:8px}.level-label,.level-hint{margin:2px}}
+@media(max-width:600px) and (orientation:portrait){#ba{height:max(48dvh,310px)}}
 </style>
 </head>
 <body><noscript><div style="position:fixed;inset:0;z-index:999;background:#243447;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font:22px/1.8 Tahoma,Arial,sans-serif">هذه المعاينة لا تشغّل الجافاسكربت، فالأزرار لن تعمل.<br>افتح اللعبة من متصفح Safari أو Chrome عبر رابط الموقع.</div></noscript><div id="rot">🔄 قلّب الجوال أفقيًا للحصول على أفضل عرض</div>
@@ -124,20 +134,33 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
 <div id="home">
 <button class="hn" id="hinfo" style="left:14px">المعلومات</button>
 <button class="hn" id="hhelp" style="right:14px;background:#ffe600;color:#333;border:0">مساعدة</button>
-<div class="hc"><div class="logo"><b>رفاهة</b><i>و</i><u>كشتة</u></div>
+<div class="hc"><div class="logo" aria-label="حروف لبدةَ"><b>حروف</b><u>لبدةَ</u></div>
 <button class="hb" id="hplay" style="background:#25d366;color:#07391b">ابدأ اللعبة</button>
+<label for="difficulty" class="level-label">مستوى أسئلة اللعبة</label>
+<select id="difficulty" class="level-select"><option value="mixed">مختلط — اللعبة العادية</option><option value="سهل">سهل</option><option value="متوسط">متوسط</option><option value="صعب">صعب</option></select>
+<p class="level-hint">المختلط يجمع المستويات مع نسبة أقل للأسئلة السهلة.</p>
+<button class="hb" id="hbank" style="background:#ffe600;color:#243447">بنك الأسئلة</button>
 <button class="sm" id="installHelp">إضافة للشاشة الرئيسية</button></div>
 </div>
 <div id="setup" style="display:none"><div class="form">
 <button class="sm" id="backHome">الصفحة الرئيسية</button>
-<div class="logo"><b>رفاهة</b><i>و</i><u>كشتة</u></div>
-<label>اسم اللعبة:</label><input id="gn" placeholder="رفاهة وكشتة" value="رفاهة وكشتة">
-<div class="r2"><div><label>عدد الخلايا:</label><button class="chip" data-k="n" data-v="4">4 خلايا</button><button class="chip on" data-k="n" data-v="5">5 خلايا</button></div>
+<div class="logo" aria-label="حروف لبدةَ"><b>حروف</b><u>لبدةَ</u></div>
+<p id="selectedLevel" class="level-hint"></p><label>اسم اللعبة:</label><input id="gn" placeholder="حروف لبدةَ" value="حروف لبدةَ">
+<div class="r2"><div><label>حجم لوحة الحروف:</label><button class="chip" data-k="n" data-v="4">٤ × ٤</button><button class="chip on" data-k="n" data-v="5">٥ × ٥</button><button class="chip" data-k="n" data-v="6">٦ × ٦</button></div>
 <div><label>عدد الجولات:</label><button class="chip" data-k="r" data-v="1">جولة</button><button class="chip on" data-k="r" data-v="3">3 جولات</button></div></div>
 <div class="r2"><div><label style="color:#ff6b66">الفريق الأحمر:</label><input id="to" placeholder="اسم الفريق" style="border-color:#c9524e"></div>
 <div><label style="color:#5fb0ff">الفريق الأزرق:</label><input id="tg" placeholder="اسم الفريق" style="border-color:#4a8fd1"></div></div>
 <p id="bankStatus" role="status" style="text-align:center;font-size:15px">جارٍ فتح سجل الأسئلة…</p><p style="text-align:center;font-size:13px;opacity:.85">المشاهد محفوظ لهذا المتصفح والموقع. تغيير الجهاز أو مسح بيانات الموقع يبدأ سجلًا جديدًا.</p><button id="go" disabled>إنشاء اللعبة</button>
 </div></div>
+<section id="bank" hidden aria-labelledby="bankTitle">
+<div class="bank-wrap"><button id="bankBack" class="sm">الصفحة الرئيسية</button><h1 id="bankTitle">بنك أسئلة حروف لبدةَ</h1>
+<p>تصفّح الأسئلة وابحث فيها. التصفّح هنا لا يغيّر سجل الأسئلة المشاهدة أثناء اللعب.</p>
+<div class="bank-filters"><label>ابحث<input id="bankSearch" type="search" placeholder="السؤال أو الإجابة" autocomplete="off"></label>
+<label>المجال<select id="bankCategory"><option value="">جميع المجالات</option></select></label>
+<label>الحرف<select id="bankLetter"><option value="">جميع الحروف</option></select></label></div>
+<p id="bankCount" role="status" aria-live="polite"></p><div id="bankList"></div>
+<div class="bank-pages"><button class="sm" id="bankPrev">السابق</button><span id="bankPage"></span><button class="sm" id="bankNext">التالي</button></div>
+</div></section>
 <div id="game">
 <div id="ba"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 50,50" fill="#e53935"/><polygon points="0,100 100,100 50,50" fill="#e53935"/><polygon points="0,0 50,50 0,100" fill="#1e7be0"/><polygon points="100,0 50,50 100,100" fill="#1e7be0"/></svg><div class="brd" id="brd"></div><div id="pz">⏸ متوقفة</div></div>
 <div id="pan">
@@ -154,16 +177,16 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
 <div><div class="sh" id="sg" style="background:var(--g)">0</div><div class="tn" id="ng"></div></div></div>
 </div></div>
 <script>const $=id=>document.getElementById(id);</script>
-<script src="questions.js?v=20261020-1"></script>
-<script src="question-history.js?v=20261020-1"></script>
+<script src="questions.js?v=20261021-1"></script>
+<script src="question-history.js?v=20261021-1"></script>
 <script>
 const HISTORY=window.RafahaHistory;
 let historyAvailable=false,claimInProgress=false,roundBusy=false,roundVersion=0;
 const ORD=["ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ي"];
-let cfg={r:3,n:5},st,L,cur=-1,curQ,rd=1,wins=[0,0],over=false,fin=false,pz=false,nm=["","",""];
+let cfg={r:3,n:5,difficulty:"mixed"},st,L,cur=-1,curQ,rd=1,wins=[0,0],over=false,fin=false,pz=false,nm=["","",""];
 for(let i=0;i<9;i++){const d=document.createElement("div");d.className="deco";d.textContent=ORD[(i*7+3)%28];d.style.cssText="top:"+[2,12,30,48,62,78,90,20,70][i]+"%;"+(i%2?"left":"right")+":"+[-40,-60,-30,-50,-20,-60,-40,-90,-80][i]+"px;transform:rotate("+(i*17%40-20)+"deg)";$("setup").prepend(d);}
 document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{cfg[c.dataset.k]=+c.dataset.v;document.querySelectorAll('.chip[data-k="'+c.dataset.k+'"]').forEach(x=>x.classList.toggle("on",x===c));});
-function chk(){$("go").disabled=!historyAvailable||HISTORY.stats().remaining===0||!($("gn").value.trim()&&$("to").value.trim()&&$("tg").value.trim());}
+function chk(){$("go").disabled=!historyAvailable||HISTORY.stats(cfg.difficulty).remaining===0||!($("gn").value.trim()&&$("to").value.trim()&&$("tg").value.trim());}
 ["gn","to","tg"].forEach(i=>$(i).oninput=chk);
 $("go").onclick=()=>{if(!historyAvailable||roundBusy)return;try{if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().then(()=>{if(screen.orientation&&screen.orientation.lock)return screen.orientation.lock("landscape");}).catch(()=>{});}catch(e){}nm[2]=$("to").value.trim();nm[1]=$("tg").value.trim();$("gn2").textContent=$("gn").value.trim();$("no").textContent=nm[2];$("ng").textContent=nm[1];$("a2").textContent="🟥 "+nm[2];$("a1").textContent="🟦 "+nm[1];wins=[0,0];rd=1;fin=false;$("setup").style.display="none";$("game").style.display="flex";startRound();};
 async function startRound(){
@@ -171,10 +194,9 @@ async function startRound(){
  roundBusy=true;++roundVersion;cur=-1;curQ=null;$("qc").style.display="none";$("asg").style.display="none";$("ok").disabled=true;
  try{
  await HISTORY.refresh();
- const counts=HISTORY.stats().counts;
- const available=ORD.filter(letter=>counts[letter]>0);
- if(available.length<cfg.n*cfg.n)throw new Error(available.length>=16?"لم تعد هناك أسئلة غير مشاهدة في ٢٥ حرفًا مختلفًا. اختر لوحة ٤ خلايا من الإعدادات للاستمرار دون إعادة أسئلة قديمة.":"الأسئلة المتبقية موزعة على أقل من ١٦ حرفًا، فلا تكفي للوحة جديدة بالحروف الفريدة. يلزم تحديث يضيف أسئلة؛ لن نمسح سجلّك أو نعيد القديم.");
- L=await HISTORY.layout(available,cfg.n*cfg.n);
+ const counts=HISTORY.stats(cfg.difficulty).counts;
+ if(Object.values(counts).reduce((sum,count)=>sum+count,0)<cfg.n*cfg.n)throw new Error("لا تكفي الأسئلة غير المشاهدة في المستوى المختار لهذه اللوحة. اختر لوحة أصغر أو مستوى آخر؛ لن نعيد أسئلة قديمة.");
+ L=await HISTORY.layout(counts,cfg.n*cfg.n);
  }catch(error){roundBusy=false;$("game").style.display="none";$("setup").style.display="block";modal(error.message);return;}
  roundBusy=false;
  pz=false;$("pz").style.display="none";$("pause").textContent="⏸";
@@ -192,43 +214,51 @@ function fit(){const a=$("ba"),n=cfg.n;if(!a.clientWidth)return;const w=Math.min
 let _f;const sched=()=>{cancelAnimationFrame(_f);_f=requestAnimationFrame(fit)};window.onresize=sched;try{new ResizeObserver(sched).observe($("ba"))}catch(e){}window.addEventListener("orientationchange",()=>setTimeout(sched,250));if(window.visualViewport)visualViewport.addEventListener("resize",sched);
 function sc(){$("so").textContent=wins[1];$("sg").textContent=wins[0];}
 function updateBankStatus(){
- const state=HISTORY.stats();
- if(!state.remaining){$("bankStatus").textContent="شاهدت كل أسئلة البنك المتاحة. لن نعيد الأسئلة القديمة؛ يلزم تحديث يضيف أسئلة جديدة.";chk();return;}
+ const state=HISTORY.stats(cfg.difficulty);
+ if(!state.remaining){$("bankStatus").textContent="نفدت الأسئلة غير المشاهدة في المستوى المختار. اختر مستوى آخر من الصفحة الرئيسية؛ لن نعيد أسئلة قديمة.";chk();return;}
  $("bankStatus").textContent="بنك الأسئلة: "+state.total.toLocaleString("ar")+" • المتبقي للعب: "+state.remaining.toLocaleString("ar");
 }
 async function pick(i,f){
  if(claimInProgress||roundBusy||!st||st[i]||over||pz||(i===cur&&!f))return;
  const version=roundVersion;
- if(cur>=0)$("h"+cur).classList.remove("sel");
- cur=-1;curQ=null;$("qc").style.display="none";$("asg").style.display="none";$("ok").disabled=true;
- claimInProgress=true;$("rr").disabled=true;$("msg").textContent="جارٍ اختيار سؤال جديد…";
+ const counts=HISTORY.stats(cfg.difficulty).counts;
+ const otherCells=letter=>st.reduce((sum,owner,index)=>sum+(!owner&&index!==cur&&L[index]===letter?1:0),0);
+ if(cur>=0&&i!==cur&&(counts[L[cur]]||0)<=otherCells(L[cur])){
+  $("msg").textContent="احسم السؤال المفتوح أولًا؛ رصيد هذا الحرف المتبقي مخصص لخلاياه الأخرى. يمكنك إعداد جولة جديدة من الخيارات.";return;
+ }
+ const reserve=st.reduce((sum,owner,index)=>sum+(!owner&&index!==i&&L[index]===L[i]?1:0),0);
+ const previousOkDisabled=$("ok").disabled;
+ let changed=false;
+ claimInProgress=true;$("rr").disabled=true;$("ok").disabled=true;$("sa").disabled=true;$("pause").disabled=true;$("msg").textContent="جارٍ اختيار سؤال جديد…";
  try{
-  const record=await HISTORY.claim(L[i]);
+  const record=await HISTORY.claim(L[i],cfg.difficulty,reserve);
   if(version!==roundVersion)return;
   updateBankStatus();
-  if(!record){$("msg").textContent="نفدت أسئلة حرف "+L[i]+" غير المشاهدة على هذا الجهاز. اختر حرفًا آخر؛ لن نعيد أسئلة سابقة.";return;}
-  cur=i;curQ=[record.q,record.a,record.difficulty,record.id,record.category];
+  if(!record){$("msg").textContent="لا يوجد سؤال إضافي متاح لهذا الحرف دون استهلاك رصيد خلاياه الأخرى. احسم السؤال المفتوح إن وجد، أو اختر حرفًا آخر أو جولة جديدة؛ لن نعيد أسئلة سابقة.";return;}
+  if(cur>=0)$("h"+cur).classList.remove("sel");
+  cur=i;curQ=[record.q,record.a,record.difficulty,record.id,record.category];changed=true;
   $("h"+i).classList.add("sel");$("msg").textContent="";
-  $("ql").textContent=L[i];$("lv").textContent=record.category+" • "+record.difficulty;
+  $("ql").textContent=L[i];$("lv").textContent=record.category;
   $("qt").textContent=record.q;$("an").textContent="";
   $("qc").style.display="block";$("sa").style.display="";$("asg").style.display="none";$("ok").disabled=false;
  }catch(error){if(version===roundVersion)$("msg").textContent=error.message;}
- finally{claimInProgress=false;$("rr").disabled=false;}
+ finally{claimInProgress=false;$("rr").disabled=false;$("sa").disabled=false;$("pause").disabled=false;if(!changed)$("ok").disabled=previousOkDisabled;}
 }
-$("sa").onclick=()=>{if(pz||cur<0||!curQ)return;$("an").textContent=curQ[1];$("sa").style.display="none";};
-$("ok").onclick=()=>{if(pz||cur<0||!curQ)return;$("asg").style.display="flex";$("ok").disabled=true;};
+$("sa").onclick=()=>{if(claimInProgress||pz||cur<0||!curQ)return;$("an").textContent=curQ[1];$("sa").style.display="none";};
+$("ok").onclick=()=>{if(claimInProgress||pz||cur<0||!curQ)return;$("asg").style.display="flex";$("ok").disabled=true;};
 $("rr").onclick=()=>{if(cur>=0)pick(cur,1);};
 document.querySelectorAll("#asg button").forEach(b=>b.onclick=()=>{
- if(pz||cur<0||over)return;
- const t=+b.dataset.t,h=$("h"+cur);h.classList.remove("sel");
+ if(claimInProgress||pz||cur<0||over)return;
+ const t=+b.dataset.t,h=$("h"+cur),answeredLetter=L[cur];h.classList.remove("sel");
  if(t){st[cur]=t;h.classList.add(t==2?"o":"g");}
  cur=-1;$("qc").style.display="none";$("asg").style.display="none";$("ok").disabled=true;
+ if(!t){const open=st.reduce((sum,owner,index)=>sum+(!owner&&L[index]===answeredLetter?1:0),0);if((HISTORY.stats(cfg.difficulty).counts[answeredLetter]||0)<open)$("msg").textContent="الرصيد المتبقي لهذا الحرف لا يغطي خلاياه المفتوحة. اختر حرفًا آخر أو أعد الجولة من الخيارات؛ لن نعيد سؤالًا سابقًا.";}
  if(t&&won(t)){over=true;wins[t-1]++;sc();const m=wins[t-1]>=Math.floor(cfg.r/2)+1;
   $("msg").textContent=m?"🏆 فاز "+nm[t]+" باللعبة!":"🎉 فاز "+nm[t]+" بالجولة!";
   if(m){fin=true;$("nx").textContent="لعبة جديدة";}$("nx").disabled=false;}
 });
 $("nx").onclick=()=>{if(roundBusy)return;$("nx").disabled=true;if(fin){$("game").style.display="none";$("setup").style.display="block";}else{rd++;startRound();}};
-$("pause").onclick=()=>{pz=!pz;$("pz").style.display=pz?"flex":"none";$("pause").textContent=pz?"▶":"⏸";};
+$("pause").onclick=()=>{if(claimInProgress)return;pz=!pz;$("pz").style.display=pz?"flex":"none";$("pause").textContent=pz?"▶":"⏸";};
 $("opt").onclick=()=>{const m=$("menu");m.style.display=m.style.display=="flex"?"none":"flex";};
 $("m1").onclick=()=>{if(!claimInProgress)startRound();};
 $("m2").onclick=()=>{if(roundBusy||claimInProgress)return;roundVersion++;$("game").style.display="none";$("setup").style.display="block";};
@@ -243,12 +273,13 @@ function won(p){const n=cfg.n,seen=new Set(),q=[];
 </script>
 <script>
 for(let i=0;i<8;i++){const d=document.createElement("div");d.className="deco";d.textContent=ORD[(i*5+2)%28];d.style.cssText="top:"+[2,18,40,62,80,8,50,88][i]+"%;"+(i%2?"left":"right")+":"+[-50,-70,-40,-60,-50,-90,-100,-80][i]+"px;opacity:.5";$("home").prepend(d);}
-$("hplay").onclick=()=>{$("home").style.display="none";$("setup").style.display="block";};
+$("hplay").onclick=()=>{$("home").style.display="none";$("setup").style.display="block";$("selectedLevel").textContent="المستوى: "+(cfg.difficulty==="mixed"?"مختلط":cfg.difficulty);if(historyAvailable)updateBankStatus();chk();};
 $("backHome").onclick=()=>{$("setup").style.display="none";$("home").style.display="flex";};
-$("hinfo").onclick=()=>modal("رفاهة وكشتة: لعبة حروف بين فريقين. الأحمر يوصل من الأعلى للأسفل، والأزرق من اليسار لليمين. الأسئلة لا تعاد على هذا المتصفح ما دام سجل الموقع محفوظًا؛ عند نفاد أسئلة حرف تظهر رسالة. الحروف تتغير مواضعها كل جولة.");
+$("difficulty").onchange=()=>{cfg.difficulty=$("difficulty").value;if(historyAvailable)updateBankStatus();chk();};
+$("hinfo").onclick=()=>modal("حروف لبدةَ: لعبة حروف بين فريقين. الأحمر يوصل من الأعلى للأسفل، والأزرق من اليسار لليمين. الأسئلة لا تعاد على هذا المتصفح ما دام سجل الموقع محفوظًا؛ عند نفاد أسئلة حرف تظهر رسالة. الحروف تتغير مواضعها كل جولة.");
 function modal(t){$("mt").textContent=t;$("md").style.display="flex";}
 $("mno").onclick=()=>{$("md").style.display="none";};
-$("hhelp").onclick=()=>modal("اختر خلية، اقرأ السؤال، وإذا أجاب الفريق صح تصير الخلية بلونه. الأحمر يوصل من الأعلى للأسفل، والأزرق من اليسار لليمين. أول فريق يوصل بين جهتيه يفوز بالجولة.");
+$("hhelp").onclick=()=>modal("اختر خلية، اقرأ السؤال، وإذا أجاب الفريق صح تصير الخلية بلونه. الأحمر يوصل من الأعلى للأسفل، والأزرق من اليسار لليمين. أول فريق يوصل بين جهتيه يفوز بالجولة. حرف الإجابة يُحسب بعد تجاهل «الـ» والتشكيل؛ مثل «الأسموزي» تحت الألف. في لوحة ٦×٦ تتكرر بعض الحروف بأسئلة مختلفة.");
 const _go=$("go").onclick;
 $("go").onclick=function(e){_go.call(this,e);hint();};
 const rot=$("rot");function hint(){if(matchMedia("(orientation:portrait)").matches){rot.classList.add("show");setTimeout(()=>rot.classList.remove("show"),4000);}}
@@ -269,5 +300,6 @@ document.addEventListener("visibilitychange",()=>{
 });
 chk();
 </script>
+<script src="question-bank.js?v=20261021-1"></script>
 </body>
 </html>

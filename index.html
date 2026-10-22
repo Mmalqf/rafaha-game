@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png"><meta name="apple-mobile-web-app-title" content="حروف لبدةَ"><meta name="theme-color" content="#243447"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest?v=20261022-1"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png"><meta name="apple-mobile-web-app-title" content="حروف لبدةَ"><meta name="theme-color" content="#243447"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <title>حروف لبدةَ</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;800&display=swap" rel="stylesheet">
@@ -35,7 +35,6 @@ input::placeholder{color:rgba(255,255,255,.55)}
 .hx{width:var(--w);height:calc(var(--w)*1.1547);background:var(--p);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);border:0;padding:0;display:flex;align-items:center;justify-content:center;flex:none}
 .hx i{width:calc(100% - 10px);height:calc(100% - 10px);clip-path:inherit;background:#fff;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:calc(var(--w)*.45);font-weight:800;color:var(--p)}
 .hx.o i{background:var(--o);color:#fff}.hx.g i{background:var(--g);color:#fff}.hx.sel i{background:#ffe14d}
-#pz{position:absolute;inset:0;background:rgba(12,20,30,.88);display:none;align-items:center;justify-content:center;font-size:34px;z-index:3}
 #pan{width:330px;background:var(--p);padding:14px;display:flex;flex-direction:column;gap:9px;direction:rtl;overflow:auto}
 @media (max-aspect-ratio:1/1){#game{flex-direction:column}#ba{flex:none;height:56dvh}#pan{width:100%;flex:1}}
 .top{display:flex;justify-content:space-between;align-items:center}
@@ -128,6 +127,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
 @media(orientation:landscape) and (max-height:520px){.hc{display:flex;flex-direction:column;gap:6px;max-width:460px}.hc .logo{margin-bottom:8px}.level-label,.level-hint{margin:2px}}
 @media(max-width:600px) and (orientation:portrait){#ba{height:max(48dvh,310px)}}
 </style>
+<link rel="stylesheet" href="board.css?v=20261022-1">
 </head>
 <body><noscript><div style="position:fixed;inset:0;z-index:999;background:#243447;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font:22px/1.8 Tahoma,Arial,sans-serif">هذه المعاينة لا تشغّل الجافاسكربت، فالأزرار لن تعمل.<br>افتح اللعبة من متصفح Safari أو Chrome عبر رابط الموقع.</div></noscript><div id="rot">🔄 قلّب الجوال أفقيًا للحصول على أفضل عرض</div>
 <div id="md" role="dialog" aria-modal="true" aria-labelledby="mt"><div><span id="mt"></span><button class="hb" id="mno" style="background:#eee;color:#555">إغلاق</button></div></div>
@@ -140,12 +140,16 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
 <select id="difficulty" class="level-select"><option value="mixed">مختلط — اللعبة العادية</option><option value="سهل">سهل</option><option value="متوسط">متوسط</option><option value="صعب">صعب</option></select>
 <p class="level-hint">المختلط يجمع المستويات مع نسبة أقل للأسئلة السهلة.</p>
 <button class="hb" id="hbank" style="background:#ffe600;color:#243447">بنك الأسئلة</button>
+<button class="sm" id="presenterQrHome">باركود المقدّم</button>
 <button class="sm" id="installHelp">إضافة للشاشة الرئيسية</button></div>
 </div>
 <div id="setup" style="display:none"><div class="form">
 <button class="sm" id="backHome">الصفحة الرئيسية</button>
 <div class="logo" aria-label="حروف لبدةَ"><b>حروف</b><u>لبدةَ</u></div>
-<p id="selectedLevel" class="level-hint"></p><label>اسم اللعبة:</label><input id="gn" placeholder="حروف لبدةَ" value="حروف لبدةَ">
+<p id="selectedLevel" class="level-hint"></p>
+<label for="playMode">طريقة اللعب</label><select id="playMode" class="level-select"><option value="board">لوحة على الشاشة + مقدّم بجوال ثانٍ</option><option value="local">اللوحة والأسئلة على جهاز واحد</option></select>
+<p class="level-hint">في وضع اللوحة يقرأ المقدّم من جواله، وتحدد هنا الخلية والفريق الفائز. اختيار الحرف يدوي على الجهازين.</p>
+<button class="sm" id="presenterQrSetup">افتح باركود المقدّم قبل بدء اللعبة</button><label>اسم اللعبة:</label><input id="gn" placeholder="حروف لبدةَ" value="حروف لبدةَ">
 <div class="r2"><div><label>حجم لوحة الحروف:</label><button class="chip" data-k="n" data-v="4">٤ × ٤</button><button class="chip on" data-k="n" data-v="5">٥ × ٥</button><button class="chip" data-k="n" data-v="6">٦ × ٦</button></div>
 <div><label>عدد الجولات:</label><button class="chip" data-k="r" data-v="1">جولة</button><button class="chip on" data-k="r" data-v="3">3 جولات</button></div></div>
 <div class="r2"><div><label style="color:#ff6b66">الفريق الأحمر:</label><input id="to" placeholder="اسم الفريق" style="border-color:#c9524e"></div>
@@ -154,6 +158,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
 </div></div>
 <section id="bank" hidden aria-labelledby="bankTitle">
 <div class="bank-wrap"><button id="bankBack" class="sm">الصفحة الرئيسية</button><h1 id="bankTitle">بنك أسئلة حروف لبدةَ</h1>
+<button class="hb" id="presenterQrBank">باركود المقدّم — افتحه بالجوال الثاني</button>
 <p>تصفّح الأسئلة وابحث فيها. التصفّح هنا لا يغيّر سجل الأسئلة المشاهدة أثناء اللعب.</p>
 <div class="bank-filters"><label>ابحث<input id="bankSearch" type="search" placeholder="السؤال أو الإجابة" autocomplete="off"></label>
 <label>المجال<select id="bankCategory"><option value="">جميع المجالات</option></select></label>
@@ -162,9 +167,9 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
 <div class="bank-pages"><button class="sm" id="bankPrev">السابق</button><span id="bankPage"></span><button class="sm" id="bankNext">التالي</button></div>
 </div></section>
 <div id="game">
-<div id="ba"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 50,50" fill="#e53935"/><polygon points="0,100 100,100 50,50" fill="#e53935"/><polygon points="0,0 50,50 0,100" fill="#1e7be0"/><polygon points="100,0 50,50 100,100" fill="#1e7be0"/></svg><div class="brd" id="brd"></div><div id="pz">⏸ متوقفة</div></div>
+<div id="ba"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 50,50" fill="#e53935"/><polygon points="0,100 100,100 50,50" fill="#e53935"/><polygon points="0,0 50,50 0,100" fill="#1e7be0"/><polygon points="100,0 50,50 100,100" fill="#1e7be0"/></svg><div class="board-sparkles" aria-hidden="true"></div><div class="brd" id="brd"></div></div>
 <div id="pan">
-<div class="top"><button class="pill" id="opt">خيارات</button><button class="ic" id="pause">⏸</button></div>
+<div class="top"><button class="pill" id="opt">خيارات</button></div>
 <div id="menu"><button class="sm" id="m1">إعادة الجولة</button><button class="sm" id="m2">إعداد لعبة جديدة</button></div>
 <div id="gn2"></div><div id="rt"></div>
 <div id="qc"><div id="ql"></div><div id="lv"></div><div id="qt"></div><div id="an"></div><button class="sm" id="sa">أظهر الإجابة</button></div>
@@ -177,29 +182,29 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffe600;outline-offse
 <div><div class="sh" id="sg" style="background:var(--g)">0</div><div class="tn" id="ng"></div></div></div>
 </div></div>
 <script>const $=id=>document.getElementById(id);</script>
-<script src="questions.js?v=20261021-1"></script>
-<script src="question-history.js?v=20261021-1"></script>
+<script src="questions.js?v=20261022-1"></script>
+<script src="question-history.js?v=20261022-1"></script>
 <script>
 const HISTORY=window.RafahaHistory;
 let historyAvailable=false,claimInProgress=false,roundBusy=false,roundVersion=0;
 const ORD=["ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ي"];
-let cfg={r:3,n:5,difficulty:"mixed"},st,L,cur=-1,curQ,rd=1,wins=[0,0],over=false,fin=false,pz=false,nm=["","",""];
+let cfg={r:3,n:5,difficulty:"mixed",mode:"board"},st,L,cur=-1,curQ,rd=1,wins=[0,0],over=false,fin=false,nm=["","",""];
 for(let i=0;i<9;i++){const d=document.createElement("div");d.className="deco";d.textContent=ORD[(i*7+3)%28];d.style.cssText="top:"+[2,12,30,48,62,78,90,20,70][i]+"%;"+(i%2?"left":"right")+":"+[-40,-60,-30,-50,-20,-60,-40,-90,-80][i]+"px;transform:rotate("+(i*17%40-20)+"deg)";$("setup").prepend(d);}
 document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{cfg[c.dataset.k]=+c.dataset.v;document.querySelectorAll('.chip[data-k="'+c.dataset.k+'"]').forEach(x=>x.classList.toggle("on",x===c));});
-function chk(){$("go").disabled=!historyAvailable||HISTORY.stats(cfg.difficulty).remaining===0||!($("gn").value.trim()&&$("to").value.trim()&&$("tg").value.trim());}
+function chk(){$("go").disabled=!historyAvailable||(cfg.mode==="local"&&HISTORY.stats(cfg.difficulty).remaining===0)||!($("gn").value.trim()&&$("to").value.trim()&&$("tg").value.trim());}
+$("playMode").onchange=()=>{cfg.mode=$("playMode").value;updateBankStatus();chk();};
 ["gn","to","tg"].forEach(i=>$(i).oninput=chk);
-$("go").onclick=()=>{if(!historyAvailable||roundBusy)return;try{if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().then(()=>{if(screen.orientation&&screen.orientation.lock)return screen.orientation.lock("landscape");}).catch(()=>{});}catch(e){}nm[2]=$("to").value.trim();nm[1]=$("tg").value.trim();$("gn2").textContent=$("gn").value.trim();$("no").textContent=nm[2];$("ng").textContent=nm[1];$("a2").textContent="🟥 "+nm[2];$("a1").textContent="🟦 "+nm[1];wins=[0,0];rd=1;fin=false;$("setup").style.display="none";$("game").style.display="flex";startRound();};
+$("go").onclick=()=>{cfg.mode=$("playMode").value;cfg.difficulty=$("difficulty").value;if(!historyAvailable||roundBusy)return;try{if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().then(()=>{if(screen.orientation&&screen.orientation.lock)return screen.orientation.lock("landscape");}).catch(()=>{});}catch(e){}nm[2]=$("to").value.trim();nm[1]=$("tg").value.trim();$("gn2").textContent=$("gn").value.trim();$("no").textContent=nm[2];$("ng").textContent=nm[1];$("a2").textContent="🟥 "+nm[2];$("a1").textContent="🟦 "+nm[1];$("game").classList.toggle("board-only",cfg.mode==="board");wins=[0,0];rd=1;fin=false;$("setup").style.display="none";$("game").style.display="flex";startRound();};
 async function startRound(){
  if(roundBusy)return;
  roundBusy=true;++roundVersion;cur=-1;curQ=null;$("qc").style.display="none";$("asg").style.display="none";$("ok").disabled=true;
  try{
  await HISTORY.refresh();
- const counts=HISTORY.stats(cfg.difficulty).counts;
+ const counts=cfg.mode==="board"?Object.fromEntries(ORD.map(letter=>[letter,36])):HISTORY.stats(cfg.difficulty).counts;
  if(Object.values(counts).reduce((sum,count)=>sum+count,0)<cfg.n*cfg.n)throw new Error("لا تكفي الأسئلة غير المشاهدة في المستوى المختار لهذه اللوحة. اختر لوحة أصغر أو مستوى آخر؛ لن نعيد أسئلة قديمة.");
  L=await HISTORY.layout(counts,cfg.n*cfg.n);
  }catch(error){roundBusy=false;$("game").style.display="none";$("setup").style.display="block";modal(error.message);return;}
  roundBusy=false;
- pz=false;$("pz").style.display="none";$("pause").textContent="⏸";
  const n=cfg.n;
  st=L.map(()=>0);cur=-1;curQ=null;over=false;
  const b=$("brd");b.innerHTML="";
@@ -210,16 +215,28 @@ async function startRound(){
  $("qc").style.display="none";$("asg").style.display="none";$("msg").textContent="";$("ok").disabled=true;$("nx").disabled=true;$("nx").textContent="الجولة التالية";$("menu").style.display="none";
  sc();fit();
 }
-function fit(){const a=$("ba"),n=cfg.n;if(!a.clientWidth)return;const w=Math.min(a.clientWidth/(n+.5),a.clientHeight/(.866*n+.29))*.95;document.documentElement.style.setProperty("--w",w+"px");}
-let _f;const sched=()=>{cancelAnimationFrame(_f);_f=requestAnimationFrame(fit)};window.onresize=sched;try{new ResizeObserver(sched).observe($("ba"))}catch(e){}window.addEventListener("orientationchange",()=>setTimeout(sched,250));if(window.visualViewport)visualViewport.addEventListener("resize",sched);
+function fit(){
+ const a=$("ba"),n=cfg.n;if(!a.clientWidth)return;
+ const controls=cfg.mode==="board"?$("pan").offsetHeight+24:0;
+ const usable=Math.max(140,a.clientHeight-controls),widthShare=a.clientWidth < 600 ? .94 : .68;
+ const w=Math.min(a.clientWidth*widthShare/(n+.5),usable*.80/(.866*n+.29));
+ document.documentElement.style.setProperty("--w",w+"px");
+ document.documentElement.style.setProperty("--board-shift",(-controls/2)+"px");
+}
+let _f;const sched=()=>{cancelAnimationFrame(_f);_f=requestAnimationFrame(fit)};window.onresize=sched;try{new ResizeObserver(sched).observe($("ba"));new ResizeObserver(sched).observe($("pan"))}catch(e){}window.addEventListener("orientationchange",()=>setTimeout(sched,250));if(window.visualViewport)visualViewport.addEventListener("resize",sched);
 function sc(){$("so").textContent=wins[1];$("sg").textContent=wins[0];}
 function updateBankStatus(){
+ if(!HISTORY)return;
  const state=HISTORY.stats(cfg.difficulty);
+ if(cfg.mode==="board"){$("bankStatus").textContent="وضع اللوحة: الأسئلة والإجابات على جوال المقدّم. هذا الجهاز لا يستهلك أسئلة.";return;}
  if(!state.remaining){$("bankStatus").textContent="نفدت الأسئلة غير المشاهدة في المستوى المختار. اختر مستوى آخر من الصفحة الرئيسية؛ لن نعيد أسئلة قديمة.";chk();return;}
  $("bankStatus").textContent="بنك الأسئلة: "+state.total.toLocaleString("ar")+" • المتبقي للعب: "+state.remaining.toLocaleString("ar");
 }
 async function pick(i,f){
- if(claimInProgress||roundBusy||!st||st[i]||over||pz||(i===cur&&!f))return;
+ if(claimInProgress||roundBusy||!st||st[i]||over||(i===cur&&!f))return;
+ if(cfg.mode==="board"){
+  if(cur>=0)$("h"+cur).classList.remove("sel");cur=i;curQ=null;$("h"+i).classList.add("sel");$("msg").textContent="حرف "+L[i]+" — اختر الفريق بعد إجابة اللاعبين";$("asg").style.display="flex";sched();return;
+ }
  const version=roundVersion;
  const counts=HISTORY.stats(cfg.difficulty).counts;
  const otherCells=letter=>st.reduce((sum,owner,index)=>sum+(!owner&&index!==cur&&L[index]===letter?1:0),0);
@@ -229,7 +246,7 @@ async function pick(i,f){
  const reserve=st.reduce((sum,owner,index)=>sum+(!owner&&index!==i&&L[index]===L[i]?1:0),0);
  const previousOkDisabled=$("ok").disabled;
  let changed=false;
- claimInProgress=true;$("rr").disabled=true;$("ok").disabled=true;$("sa").disabled=true;$("pause").disabled=true;$("msg").textContent="جارٍ اختيار سؤال جديد…";
+ claimInProgress=true;$("rr").disabled=true;$("ok").disabled=true;$("sa").disabled=true;$("msg").textContent="جارٍ اختيار سؤال جديد…";
  try{
   const record=await HISTORY.claim(L[i],cfg.difficulty,reserve);
   if(version!==roundVersion)return;
@@ -242,23 +259,23 @@ async function pick(i,f){
   $("qt").textContent=record.q;$("an").textContent="";
   $("qc").style.display="block";$("sa").style.display="";$("asg").style.display="none";$("ok").disabled=false;
  }catch(error){if(version===roundVersion)$("msg").textContent=error.message;}
- finally{claimInProgress=false;$("rr").disabled=false;$("sa").disabled=false;$("pause").disabled=false;if(!changed)$("ok").disabled=previousOkDisabled;}
+ finally{claimInProgress=false;$("rr").disabled=false;$("sa").disabled=false;if(!changed)$("ok").disabled=previousOkDisabled;}
 }
-$("sa").onclick=()=>{if(claimInProgress||pz||cur<0||!curQ)return;$("an").textContent=curQ[1];$("sa").style.display="none";};
-$("ok").onclick=()=>{if(claimInProgress||pz||cur<0||!curQ)return;$("asg").style.display="flex";$("ok").disabled=true;};
+$("sa").onclick=()=>{if(claimInProgress||cur<0||!curQ)return;$("an").textContent=curQ[1];$("sa").style.display="none";};
+$("ok").onclick=()=>{if(claimInProgress||cur<0||!curQ)return;$("asg").style.display="flex";$("ok").disabled=true;};
 $("rr").onclick=()=>{if(cur>=0)pick(cur,1);};
 document.querySelectorAll("#asg button").forEach(b=>b.onclick=()=>{
- if(claimInProgress||pz||cur<0||over)return;
+ if(claimInProgress||cur<0||over)return;
  const t=+b.dataset.t,h=$("h"+cur),answeredLetter=L[cur];h.classList.remove("sel");
  if(t){st[cur]=t;h.classList.add(t==2?"o":"g");}
  cur=-1;$("qc").style.display="none";$("asg").style.display="none";$("ok").disabled=true;
- if(!t){const open=st.reduce((sum,owner,index)=>sum+(!owner&&L[index]===answeredLetter?1:0),0);if((HISTORY.stats(cfg.difficulty).counts[answeredLetter]||0)<open)$("msg").textContent="الرصيد المتبقي لهذا الحرف لا يغطي خلاياه المفتوحة. اختر حرفًا آخر أو أعد الجولة من الخيارات؛ لن نعيد سؤالًا سابقًا.";}
+ if(!t&&cfg.mode==="local"){const open=st.reduce((sum,owner,index)=>sum+(!owner&&L[index]===answeredLetter?1:0),0);if((HISTORY.stats(cfg.difficulty).counts[answeredLetter]||0)<open)$("msg").textContent="الرصيد المتبقي لهذا الحرف لا يغطي خلاياه المفتوحة. اختر حرفًا آخر أو أعد الجولة من الخيارات؛ لن نعيد سؤالًا سابقًا.";}
+ if(cfg.mode==="board")$("msg").textContent="";sched();
  if(t&&won(t)){over=true;wins[t-1]++;sc();const m=wins[t-1]>=Math.floor(cfg.r/2)+1;
   $("msg").textContent=m?"🏆 فاز "+nm[t]+" باللعبة!":"🎉 فاز "+nm[t]+" بالجولة!";
   if(m){fin=true;$("nx").textContent="لعبة جديدة";}$("nx").disabled=false;}
 });
 $("nx").onclick=()=>{if(roundBusy)return;$("nx").disabled=true;if(fin){$("game").style.display="none";$("setup").style.display="block";}else{rd++;startRound();}};
-$("pause").onclick=()=>{if(claimInProgress)return;pz=!pz;$("pz").style.display=pz?"flex":"none";$("pause").textContent=pz?"▶":"⏸";};
 $("opt").onclick=()=>{const m=$("menu");m.style.display=m.style.display=="flex"?"none":"flex";};
 $("m1").onclick=()=>{if(!claimInProgress)startRound();};
 $("m2").onclick=()=>{if(roundBusy||claimInProgress)return;roundVersion++;$("game").style.display="none";$("setup").style.display="block";};
@@ -287,9 +304,8 @@ document.addEventListener("focusin",e=>{if(e.target.tagName=="INPUT")setTimeout(
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&typeof sched==="function")sched();});
 addEventListener("pageshow",()=>{if(typeof sched==="function")sched();});
 if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}
-$("installHelp").onclick=()=>modal("على الآيفون: افتح رابط الموقع في Safari، ثم المشاركة ← إضافة إلى الشاشة الرئيسية ← إضافة. فعّل «فتح كتطبيق ويب» إن ظهر. يلزم الاتصال أول مرة لحفظ ملفات اللعبة؛ الخط قد يستخدم خط الجهاز دون إنترنت.");
+$("installHelp").onclick=()=>modal("على الآيفون: افتح رابط الموقع في Safari، ثم المشاركة ← إضافة إلى الشاشة الرئيسية. اكتب الاسم «حروف لبدةَ» ثم اضغط إضافة. فعّل «فتح كتطبيق ويب» إن ظهر. الاختصار القديم قد يبقى باسمه السابق؛ عند الإضافة من جديد لا تمسح بيانات الموقع حتى لا تفقد سجل الأسئلة. يلزم الاتصال أول مرة لحفظ ملفات اللعبة؛ الخط قد يستخدم خط الجهاز دون إنترنت.");
 document.querySelectorAll("button").forEach(b=>b.type="button");
-$("pause").setAttribute("aria-label","إيقاف أو استئناف الجولة");
 $("rr").setAttribute("aria-label","تغيير السؤال");
 $("md").setAttribute("role","dialog");$("md").setAttribute("aria-modal","true");$("md").setAttribute("aria-labelledby","mt");
 if(HISTORY){HISTORY.ready.then(()=>{
@@ -300,6 +316,8 @@ document.addEventListener("visibilitychange",()=>{
 });
 chk();
 </script>
-<script src="question-bank.js?v=20261021-1"></script>
+<script src="question-bank.js?v=20261022-1"></script>
+<dialog id="presenterQrDialog" aria-labelledby="presenterQrTitle"><div class="qr-content"><button type="button" id="presenterQrClose" class="sm">إغلاق</button><h2 id="presenterQrTitle">جوال المقدّم</h2><p>امسح الرمز بالجوال الثاني. اختر الحرف هناك لتقرأ السؤال وإجابته، واختر الخلية هنا على الشاشة.</p><div id="presenterQrCode"></div><p id="presenterQrStatus" role="status"></p><a id="presenterOpen" class="sm" target="_blank" rel="noopener">فتح وضع المقدّم</a><label>رابط المقدّم<input id="presenterUrl" readonly dir="ltr"></label><button type="button" id="presenterCopy" class="sm">نسخ الرابط</button><p class="level-hint">اختيار الحرف وتلوين الخلية يدويان. لا توجد مزامنة بين الجهازين.</p></div></dialog>
+<script src="vendor/qrcodegen.js?v=20261022-1"></script><script src="presenter-link.js?v=20261022-1"></script>
 </body>
 </html>
